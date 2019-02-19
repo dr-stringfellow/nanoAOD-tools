@@ -60,7 +60,27 @@ def runsAndLumis():
               runsAndLumis[rstart]=[]
              runsAndLumis[rstart].append([int(lstart),int(lstop)])
 	 print "Runs and Lumis",runsAndLumis
-         return runsAndLumis 
+         return runsAndLumis
     return None
 
+
+import ROOT as r
+# Writes the name of the dataset into the output file
+# The dataset name is determined from an input argument:
+#     config.JobType.scriptArgs = ["dataset="/Name/Of/Dataset"]
+def addDatasetTag():
+   # Start with dummy value
+   dataset = 'unknown'
+
+   # Loop over input arguments
+   prefix = "dataset="
+   for argument in sys.argv:
+      if argument.startswith(prefix):
+         dataset = argument.replace(prefix, "")
+
+   # Write into output file
+   f = r.TFile("tree.root","update")
+   s = r.TObjString(dataset)
+   s.Write("dataset")
+   f.Close()
 
