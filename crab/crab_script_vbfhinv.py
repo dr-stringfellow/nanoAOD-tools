@@ -8,12 +8,17 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.crabhelper import inputF
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import *
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetUncertainties import *
+from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jecUncertainties import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import *
 
-modules = [ jetmetUncertainties2017(), jetmetUncertainties2017AK4Puppi(),btagSF2017(),puAutoWeight()]
+modules = [ 
+    jetmetUncertainties2017(),
+    # jecUncertProducerCpp( "Fall17_17Nov2017_V6_MC",doCppOutput=True),
+    puAutoWeight()
+    ]
 
 files = inputFiles()
-files = ["/user/albert/scratch/VBF_HToInvisible_M125_13TeV_TuneCP5_powheg_pythia8/823D1180-A3F3-E811-9C4E-E0071B73C600.root"]
+# files = ["/user/albert/scratch/VBF_HToInvisible_M125_13TeV_TuneCP5_powheg_pythia8/823D1180-A3F3-E811-9C4E-E0071B73C600.root"]
 p=PostProcessor(".",files,"",modules=modules,provenance=True,fwkJobReport=True)
 p.run()
 
