@@ -2,7 +2,9 @@
 from WMCore.Configuration import Configuration
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 
+import md5
 import sys
+import re
 
 def get_dataset():
     # Parse dataset from commandline
@@ -15,6 +17,30 @@ def get_dataset():
         raise Exception("Must pass dataset argument as Data.inputDataset=...")
     return dataset
 
+def pretty_dataset_name(dataset, is_mc):
+    ### Prettify data set name
+    dataset_simplified, conditions = dataset.split("/")[1:3]
+
+    if is_mc:
+        # Attach short campaign identifier
+        for campaign in ["RunIIFall17", "RunIIAutumn18"]:
+            if campaign in conditions:
+                dataset_simplified = "{}_{}".format(campaign, dataset_simplified)
+
+        # Check if extension
+        m = re.match(".*(ext\d+)", conditions);
+        if m:
+            groups = m.groups()
+            assert len(groups) == 1
+            dataset_simplified = "{}_{}".format(dataset_simplified, groups[0])
+    else:
+        m = re.match("(Run\d+[A-Z])", conditions)
+        if m:
+            groups = m.groups()
+            assert len(groups) == 1
+            dataset_simplified = "{}_{}".format(dataset_simplified, groups[0])
+
+    return dataset_simplified
 
 def base_configuration():
     config = Configuration()
@@ -39,9 +65,8 @@ def base_configuration():
 
     return config
 
-tag = "test_v2"
+tag = "19Mar19"
 dataset = get_dataset()
-
 
 config = base_configuration()
 
@@ -57,16 +82,20 @@ elif "Run2018" in dataset:
     crab_script = 'crab_script_vbfhinv_data18.py'
 else:
     raise RuntimeError("Could not deduce what CRAB script to use for dataset: '{}'".format(dataset))
+
+
+dataset_simplified = pretty_dataset_name(dataset, is_mc)
+
 config.JobType.inputFiles.append(crab_script)
 
-
-dataset_simplified = dataset.split("/")[1]
 config.General.requestName = "nano_post_{0}_{1}".format(tag, dataset_simplified)
 config.Data.inputDataset = dataset
 config.Data.unitsPerJob = 1
 config.Data.totalUnits = 1
 config.Data.outputDatasetTag = tag
-config.Data.outLFNDirBase = '/store/user/{0}/NanoPost/{1}/'.format(getUsernameFromSiteDB(), tag)
+config.Data.outLFNDirBase = '/store/user/{0}/NanoPost/{1}/{2}'.format(getUsernameFromSiteDB(),
+                                                                          tag,
+                                                                          "MC" if is_mc else "Data")
 
 
 config.General.workArea = "./wdir/{}".format(tag)
