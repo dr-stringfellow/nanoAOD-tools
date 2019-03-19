@@ -24,11 +24,11 @@ def pretty_dataset_name(dataset, is_mc):
     if is_mc:
         # Attach short campaign identifier
         for campaign in ["RunIIFall17", "RunIIAutumn18"]:
-            if campaign in conditions:
+            if campaign in conditions: 
                 dataset_simplified = "{}_{}".format(campaign, dataset_simplified)
 
         # Check if extension
-        m = re.match(".*(ext\d+)", conditions);
+        m = re.match(".*(ext\d+)", conditions); 
         if m:
             groups = m.groups()
             assert len(groups) == 1
@@ -39,7 +39,7 @@ def pretty_dataset_name(dataset, is_mc):
             groups = m.groups()
             assert len(groups) == 1
             dataset_simplified = "{}_{}".format(dataset_simplified, groups[0])
-
+    
     return dataset_simplified
 
 def base_configuration():
@@ -91,7 +91,7 @@ config.JobType.inputFiles.append(crab_script)
 config.General.requestName = "nano_post_{0}_{1}".format(tag, dataset_simplified)
 config.Data.inputDataset = dataset
 config.Data.unitsPerJob = 1
-config.Data.totalUnits = 1
+config.Data.totalUnits = -1
 config.Data.outputDatasetTag = tag
 config.Data.outLFNDirBase = '/store/user/{0}/NanoPost/{1}/{2}'.format(getUsernameFromSiteDB(),
                                                                           tag,
