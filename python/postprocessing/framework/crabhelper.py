@@ -73,8 +73,8 @@ def addDatasetTag():
    dataset = 'unknown'
 
    # Loop over input arguments
+   prefix = "dataset="
    for argument in sys.argv:
-      prefix = "dataset="
       if argument.startswith(prefix):
          dataset = argument.replace(prefix, "")
 
