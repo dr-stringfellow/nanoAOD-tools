@@ -24,11 +24,11 @@ def pretty_dataset_name(dataset, is_mc):
     if is_mc:
         # Attach short campaign identifier
         for campaign in ["RunIIFall17", "RunIIAutumn18"]:
-            if campaign in conditions: 
+            if campaign in conditions:
                 dataset_simplified = "{}_{}".format(campaign, dataset_simplified)
 
         # Check if extension
-        m = re.match(".*(ext\d+)", conditions); 
+        m = re.match(".*(ext\d+)", conditions);
         if m:
             groups = m.groups()
             assert len(groups) == 1
@@ -39,7 +39,7 @@ def pretty_dataset_name(dataset, is_mc):
             groups = m.groups()
             assert len(groups) == 1
             dataset_simplified = "{}_{}".format(dataset_simplified, groups[0])
-    
+
     return dataset_simplified
 
 def base_configuration():
@@ -65,7 +65,19 @@ def base_configuration():
 
     return config
 
-tag = "19Mar19"
+# Ensure that the string is not longer than 100 characters
+# To comply with the CRAB request name limit
+def cut_string(string_in):
+    l = len(string_in)
+    if l < 100:
+        return string_in
+
+    partial_hash = md5.md5(string_in[90:]).hexdigest()
+    ret = string_in[:90] + partial_hash[:10]
+    return ret
+
+
+tag = "test_v3"
 dataset = get_dataset()
 
 config = base_configuration()
@@ -83,16 +95,24 @@ elif "Run2018" in dataset:
 else:
     raise RuntimeError("Could not deduce what CRAB script to use for dataset: '{}'".format(dataset))
 
+config.JobType.inputFiles.append(crab_script)
 
 dataset_simplified = pretty_dataset_name(dataset, is_mc)
 
-config.JobType.inputFiles.append(crab_script)
+# Pass the dataset name as an argument so that
+# the script can write it into the output files.
+config.JobType.scriptArgs = ["dataset={}".format(dataset_simplified)]
 
-config.General.requestName = "nano_post_{0}_{1}".format(tag, dataset_simplified)
+config.General.requestName = cut_string("nano_post_{0}_{1}".format(tag, dataset_simplified))
 config.Data.inputDataset = dataset
 config.Data.unitsPerJob = 1
-config.Data.totalUnits = -1
-config.Data.outputDatasetTag = tag
+
+if "test" in tag:
+    config.Data.totalUnits = 1
+else:
+    config.Data.totalUnits = -1
+
+config.Data.outputDatasetTag = dataset_simplified
 config.Data.outLFNDirBase = '/store/user/{0}/NanoPost/{1}/{2}'.format(getUsernameFromSiteDB(),
                                                                           tag,
                                                                           "MC" if is_mc else "Data")
