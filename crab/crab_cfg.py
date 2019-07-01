@@ -15,12 +15,7 @@ def get_dataset():
             dataset = arg.split('=')[1]
     if dataset == 'dummy':
         raise Exception("Must pass dataset argument as Data.inputDataset=...")
-
-    parts = dataset.split(":")
-    assert(len(parts)==2)
-
-    short, long = parts
-    return short, long
+    return dataset
 
 
 def base_configuration():
@@ -57,10 +52,27 @@ def cut_string(string_in):
     ret = string_in[:90] + partial_hash[:10]
     return ret
 
+def short_name(dataset):
+    name, conditions, _ = dataset.split("/")
+
+    # Remove useless info
+    name = name.replace("_TuneCP5","")
+    name = name.replace("_TuneCUETP8M1","")
+    name = name.replace("_13TeV","")
+    name = name.replace("-pythia8","")
+    name = name.replace("madgraphMLM","MLM")
+    name = name.replace("amcnloFXFX","FXFX")
+    name = name.replace("powheg","pow")
+
+    # Detect extension
+    m=re.match(".*(ext\d+).*",conditions);
+    if m:
+        name = name + "_" + m.groups[0]
+    return name
 
 tag = "test_v3"
-name, dataset = get_dataset()
-
+dataset = get_dataset()
+name = short_name(dataset)
 config = base_configuration()
 
 
