@@ -15,32 +15,13 @@ def get_dataset():
             dataset = arg.split('=')[1]
     if dataset == 'dummy':
         raise Exception("Must pass dataset argument as Data.inputDataset=...")
-    return dataset
 
-def pretty_dataset_name(dataset, is_mc):
-    ### Prettify data set name
-    dataset_simplified, conditions = dataset.split("/")[1:3]
+    parts = dataset.split(":")
+    assert(len(parts)==2)
 
-    if is_mc:
-        # Attach short campaign identifier
-        for campaign in ["RunIIFall17", "RunIIAutumn18"]:
-            if campaign in conditions:
-                dataset_simplified = "{}_{}".format(campaign, dataset_simplified)
+    short, long = parts
+    return short, long
 
-        # Check if extension
-        m = re.match(".*(ext\d+)", conditions);
-        if m:
-            groups = m.groups()
-            assert len(groups) == 1
-            dataset_simplified = "{}_{}".format(dataset_simplified, groups[0])
-    else:
-        m = re.match("(Run\d+[A-Z])", conditions)
-        if m:
-            groups = m.groups()
-            assert len(groups) == 1
-            dataset_simplified = "{}_{}".format(dataset_simplified, groups[0])
-
-    return dataset_simplified
 
 def base_configuration():
     config = Configuration()
@@ -61,7 +42,7 @@ def base_configuration():
 
     config.Data.publication = False
     config.section_("Site")
-    config.Site.storageSite = "T2_DE_RWTH"
+    config.Site.storageSite = "T2_CH_CERNBOX"
 
     return config
 
@@ -78,32 +59,37 @@ def cut_string(string_in):
 
 
 tag = "test_v3"
-dataset = get_dataset()
+name, dataset = get_dataset()
 
 config = base_configuration()
 
 
 ### Determine what to do based on type of dataset
 is_mc = dataset.endswith("SIM")
-if is_mc:
-    crab_script = 'crab_script_vbfhinv.py'
-elif "Run2017" in dataset:
-    crab_script = 'crab_script_vbfhinv_data17.py'
-    config.JobType.inputFiles.append("input/json/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt")
-elif "Run2018" in dataset:
-    crab_script = 'crab_script_vbfhinv_data18.py'
-else:
-    raise RuntimeError("Could not deduce what CRAB script to use for dataset: '{}'".format(dataset))
+crab_script = "crab_script_monojet.py"
+
+
+if ("Autumn18" in dataset) or ("Run2018" in dataset):
+    year=2018
+elif ("Run2017" in dataset) or ("Fall17" in dataset):
+    year=2017
+
+if not is_mc:
+    if year==2017:
+        config.JobType.inputFiles.append("input/json/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt")
+    elif year==2018:
+        config.JobType.inputFiles.append("input/json/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt")
 
 config.JobType.inputFiles.append(crab_script)
-
-dataset_simplified = pretty_dataset_name(dataset, is_mc)
+config.JobType.inputFiles.append('keep_and_drop_monojet.txt')
 
 # Pass the dataset name as an argument so that
 # the script can write it into the output files.
-config.JobType.scriptArgs = ["dataset={}".format(dataset_simplified)]
+config.JobType.scriptArgs = ["dataset={}".format(name),
+                             "ismc={}".format(is_mc),
+                             "year={}".format(year)]
 
-config.General.requestName = cut_string("nano_post_{0}_{1}".format(tag, dataset_simplified))
+config.General.requestName = cut_string("nano_post_{0}_{1}".format(tag, name))
 config.Data.inputDataset = dataset
 config.Data.unitsPerJob = 1
 
@@ -112,8 +98,8 @@ if "test" in tag:
 else:
     config.Data.totalUnits = -1
 
-config.Data.outputDatasetTag = dataset_simplified
-config.Data.outLFNDirBase = '/store/user/{0}/NanoPost/{1}/{2}'.format(getUsernameFromSiteDB(),
+config.Data.outputDatasetTag = name
+config.Data.outLFNDirBase = '/store/user/{0}/nanopost/{1}/{2}'.format(getUsernameFromSiteDB(),
                                                                           tag,
                                                                           "MC" if is_mc else "Data")
 

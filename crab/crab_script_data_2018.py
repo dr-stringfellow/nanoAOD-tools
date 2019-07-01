@@ -11,15 +11,14 @@ from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetUncertainties im
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jecUncertainties import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import *
 
-modules = [ 
-    jetmetUncertainties2017(),
-    # jecUncertProducerCpp( "Fall17_17Nov2017_V6_MC",doCppOutput=True),
-    puAutoWeight()
-    ]
 
 files = inputFiles()
-# files = ["/user/albert/scratch/VBF_HToInvisible_M125_13TeV_TuneCP5_powheg_pythia8/823D1180-A3F3-E811-9C4E-E0071B73C600.root"]
-p=PostProcessor(".",files,"",modules=modules,provenance=True,fwkJobReport=True)
+p=PostProcessor(outputDir=".",
+inputFiles=files,
+branchsel="keep_drop_monojet.txt",
+provenance=True,
+fwkJobReport=True,
+jsonInput="Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt")
 p.run()
 
 addDatasetTag()
