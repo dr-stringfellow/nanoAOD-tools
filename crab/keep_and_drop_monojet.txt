@@ -80,8 +80,9 @@ keep MET_*
 keep TkMET_*
 keep PuppiMET_*
 keep CaloMET_*
+keep PuppiMET_*
 
-keep Flag_METFilters
+keep Flag_*
 
 keep genWeight
 keep Generator_*
