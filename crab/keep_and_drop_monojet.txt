@@ -1,0 +1,100 @@
+drop *
+
+keep nGenPart
+keep GenPart_*
+
+keep GenMET_*
+
+keep nGenJet
+keep GenJet_*
+
+keep nGenJetAK8
+keep GenJetAK8_*
+
+keep nMuon
+keep Muon_pt
+keep Muon_eta
+keep Muon_phi
+keep Muon_mass
+keep Muon_charge
+keep Muon_softId
+keep Muon_looseId
+keep Muon_tightId
+keep Muon_mediumId
+keep Muon_triggerIdLoose
+keep Muon_pf*
+keep Muon_dxy
+keep Muon_dxyErr
+keep Muon_dz
+keep Muon_dzErr
+keep Muon_is*
+keep Muon_ptErr
+
+keep nElectron
+keep Electron_pt
+keep Electron_eta
+keep Electron_phi
+keep Electron_charge
+keep Electron_cutBased*
+keep Electron_dxy
+keep Electron_dz
+keep Electron_eta
+keep Electron_eCorr
+
+keep nTau
+keep Tau_pt
+keep Tau_eta
+keep Tau_phi
+keep Tau_idDecayMode
+keep Tau_idDecayModeNewDMs
+keep Tau_cleanmask
+keep Tau_idMVAnewDM2017v2
+keep Tau_idMVAoldDM2017v2
+keep Tau_idAntiEle
+keep Tau_idAntiMu
+
+keep nPhoton
+keep Photon_pt
+keep Photon_eta
+keep Photon_phi
+keep Photon_mass
+keep Photon_cutBasedBitmap
+keep Photon_eCorr
+keep Photon_energyErr
+keep Photon_electronVeto
+keep Photon_cleanmask
+
+keep nJet
+keep Jet_*
+keep fixedGridRho*
+
+keep nCorrT1METJet
+keep CorrT1METJet_*
+
+keep nFatJet
+keep FatJet_*
+
+keep PV_*
+
+keep MET_*
+keep TkMET_*
+keep PuppiMET_*
+keep CaloMET_*
+
+keep Flag_METFilters
+
+keep genWeight
+keep Generator_*
+keep Pileup_*
+
+keep LHE_*
+keep *LHE*Weight*
+
+keep nTrigObj
+keep TrigObj_*
+keep HLT_*
+keep L1_*
+
+keep event
+keep run
+keep luminosityBlock
