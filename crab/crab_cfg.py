@@ -53,7 +53,7 @@ def cut_string(string_in):
     return ret
 
 def short_name(dataset):
-    _, name, conditions, _ = dataset.split("/")
+    name, conditions, _ = dataset.split("/")
 
     # Remove useless info
     name = name.replace("_TuneCP5","")
@@ -61,6 +61,7 @@ def short_name(dataset):
     name = name.replace("_13TeV","")
     name = name.replace("-pythia8","")
     name = name.replace("madgraphMLM","MLM")
+    name = name.replace("madgraph","mg")
     name = name.replace("amcnloFXFX","FXFX")
     name = name.replace("powheg","pow")
 
@@ -73,7 +74,6 @@ def short_name(dataset):
         name = name + "_2017"
     elif 'RunIIAutumn18' in conditions:
         name = name + "_2018"
-
     return name
 
 tag = "test_v3"
