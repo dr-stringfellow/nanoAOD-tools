@@ -22,8 +22,8 @@ for argument in sys.argv:
             options[prefix] = value
 options['ismc'] = options['ismc'].lower() == "true"
 
-# files = inputFiles()
-files = ['file:/eos/user/a/aalbert/nanopost/nopost/2EC2FE2C-56B0-584D-9149-463719420BE5.root']
+files = inputFiles()
+# files = ['file:/eos/user/a/aalbert/nanopost/nopost/2EC2FE2C-56B0-584D-9149-463719420BE5.root']
 branchsel = "keep_and_drop_monojet.txt"
 cut = ''
 
@@ -47,6 +47,7 @@ if options['ismc']:
         outputbranchsel=branchsel,
         modules=modules,
         provenance=True,
+        maxEntries=1000,
         fwkJobReport=True)
 else:
     if options['year'] == '2017':
