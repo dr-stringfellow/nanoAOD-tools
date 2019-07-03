@@ -53,7 +53,7 @@ def cut_string(string_in):
     return ret
 
 def short_name(dataset):
-    name, conditions, _ = dataset.split("/")
+    _, name, conditions, _ = dataset.split("/")
 
     # Remove useless info
     name = name.replace("_TuneCP5","")
@@ -76,7 +76,7 @@ def short_name(dataset):
         name = name + "_2018"
     return name
 
-tag = "test_v3"
+tag = "2Jul19"
 dataset = get_dataset()
 name = short_name(dataset)
 config = base_configuration()
@@ -107,7 +107,7 @@ config.JobType.scriptArgs = ["dataset={}".format(name),
                              "ismc={}".format(is_mc),
                              "year={}".format(year)]
 
-config.General.requestName = cut_string("nano_post_{0}_{1}".format(tag, name))
+config.General.requestName = cut_string(name)
 config.Data.inputDataset = dataset
 config.Data.unitsPerJob = 1
 

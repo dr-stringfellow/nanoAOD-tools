@@ -47,7 +47,6 @@ if options['ismc']:
         outputbranchsel=branchsel,
         modules=modules,
         provenance=True,
-        maxEntries=1000,
         fwkJobReport=True)
 else:
     if options['year'] == '2017':
