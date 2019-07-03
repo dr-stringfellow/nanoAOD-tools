@@ -70,10 +70,15 @@ def short_name(dataset):
     if m:
         name = name + "_" + m.groups[0]
 
-    if "RunIIFall17" in conditions:
+    if ("RunIIFall17" in conditions):
         name = name + "_2017"
     elif 'RunIIAutumn18' in conditions:
         name = name + "_2018"
+
+    m = re.match("Run(\d+[A-Z]*)", conditions)
+    if m:
+        name = name + m.groups()[0]
+
     return name
 
 tag = "2Jul19"
