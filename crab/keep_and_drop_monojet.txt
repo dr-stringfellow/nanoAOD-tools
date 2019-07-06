@@ -15,7 +15,6 @@ keep nMuon
 keep Muon_pt
 keep Muon_eta
 keep Muon_phi
-keep Muon_mass
 keep Muon_charge
 keep Muon_softId
 keep Muon_looseId
