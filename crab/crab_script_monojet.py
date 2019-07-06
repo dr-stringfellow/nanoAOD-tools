@@ -7,10 +7,9 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import *
 from PhysicsTools.NanoAODTools.postprocessing.framework.crabhelper import inputFiles,runsAndLumis, addDatasetTag
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import *
+from PhysicsTools.NanoAODTools.postprocessing.modules.monojet.monojetpost import monojetPost
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetUncertainties import *
-from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jecUncertainties import *
-from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import *
 
 # Loop over input arguments
 options = {}
@@ -31,11 +30,13 @@ modules = []
 if options['ismc']:
     if options['year'] == '2017':
         modules = [
+            monojetPost(),
             jetmetUncertainties2017(),
             jetmetUncertainties2017AK8Puppi(),
             ]
     elif options['year'] == '2018':
         modules = [
+            monojetPost(),
             jetmetUncertainties2018(),
             jetmetUncertainties2018AK8Puppi(),
             ]
@@ -53,10 +54,12 @@ else:
         json = "Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt"
     elif options['year'] == '2018':
         json = "Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt"
+    modules = [monojetPost()]
     p=PostProcessor(outputDir=".",
         inputFiles=files,
         cut=cut,
         outputbranchsel=branchsel,
+        modules=modules,
         provenance=True,
         fwkJobReport=True,
         jsonInput=json)
