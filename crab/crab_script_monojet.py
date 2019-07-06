@@ -10,6 +10,7 @@ from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer im
 from PhysicsTools.NanoAODTools.postprocessing.modules.monojet.monojetpost import monojetPost
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetUncertainties import *
+from PhysicsTools.NanoAODTools.postprocessing.modules.common.PrefireCorr import PrefCorr
 
 # Loop over input arguments
 options = {}
@@ -24,7 +25,7 @@ options['ismc'] = options['ismc'].lower() == "true"
 files = inputFiles()
 # files = ['file:/eos/user/a/aalbert/nanopost/nopost/2EC2FE2C-56B0-584D-9149-463719420BE5.root']
 branchsel = "keep_and_drop_monojet.txt"
-cut = '(((nMuon+nElectron+nPhoton)>0) | (MET_pt>50)) && (nJet>0) && (Jet_pt[0]>75)'
+cut = '(((nMuon+nElectron+nPhoton)>0) | (MET_pt>50)) && ((nJet+nFatJet)>0)'
 
 modules = []
 if options['ismc']:
@@ -33,6 +34,10 @@ if options['ismc']:
             monojetPost(),
             jetmetUncertainties2017(),
             jetmetUncertainties2017AK8Puppi(),
+            PrefCorr(jetroot="L1prefiring_jetpt_2017BtoF.root",
+                     jetmapname="L1prefiring_jetpt_2017BtoF",
+                     photonroot="L1prefiring_photonpt_2017BtoF.root",
+                     photonmapname="L1prefiring_photonpt_2017BtoF")
             ]
     elif options['year'] == '2018':
         modules = [
