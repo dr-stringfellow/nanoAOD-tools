@@ -25,7 +25,7 @@ options['ismc'] = options['ismc'].lower() == "true"
 files = inputFiles()
 # files = ['file:/eos/user/a/aalbert/nanopost/nopost/2EC2FE2C-56B0-584D-9149-463719420BE5.root']
 branchsel = "keep_and_drop_monojet.txt"
-cut = ''
+cut = '(((nMuon+nElectron+nPhoton)>0) | (MET_pt>50)) && (nJet>0) && (Jet_pt[0]>75)'
 
 modules = []
 if options['ismc']:
