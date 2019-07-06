@@ -37,7 +37,8 @@ def base_configuration():
 
     config.Data.publication = False
     config.section_("Site")
-    config.Site.storageSite = "T2_CH_CERNBOX"
+    # config.Site.storageSite = "T2_CH_CERNBOX"
+    config.Site.storageSite = "T2_DE_RWTH"
 
     return config
 
@@ -66,18 +67,18 @@ def short_name(dataset):
     name = name.replace("powheg","pow")
 
     # Detect extension
-    m=re.match(".*(ext\d+).*",conditions);
+    m=re.match(r".*(ext\d+).*",conditions);
     if m:
-        name = name + "_" + m.groups[0]
+        name = name + "_" + m.groups()[0]
 
-    if ("RunIIFall17" in conditions):
+    if "RunIIFall17" in conditions:
         name = name + "_2017"
     elif 'RunIIAutumn18' in conditions:
         name = name + "_2018"
 
-    m = re.match("Run(\d+[A-Z]*)", conditions)
+    m = re.match(r"Run(\d+[A-Z]*)", conditions)
     if m:
-        name = name + m.groups()[0]
+        name = name + "_" + m.groups()[0]
 
     return name
 
