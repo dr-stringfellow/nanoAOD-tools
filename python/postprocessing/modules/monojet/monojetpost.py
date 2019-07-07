@@ -17,7 +17,7 @@ class monojetPost(Module):
         pass
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
-        if event.nJet == 0:
+        if event.nJet + event.nFatJet == 0:
             return False
 
         # Check for jets
