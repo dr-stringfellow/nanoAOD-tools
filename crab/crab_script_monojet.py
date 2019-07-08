@@ -23,9 +23,7 @@ for argument in sys.argv:
 options['ismc'] = options['ismc'].lower() == "true"
 
 files = inputFiles()
-# files = ['file:/eos/user/a/aalbert/nanopost/nopost/2EC2FE2C-56B0-584D-9149-463719420BE5.root']
 branchsel = "keep_and_drop_monojet.txt"
-cut = ''
 
 modules = []
 if options['ismc']:
@@ -49,7 +47,6 @@ if options['ismc']:
     p = PostProcessor(
         outputDir=".",
         inputFiles=files,
-        cut=cut,
         outputbranchsel=branchsel,
         modules=modules,
         provenance=True,
@@ -62,7 +59,6 @@ else:
     modules = [monojetPost()]
     p=PostProcessor(outputDir=".",
         inputFiles=files,
-        cut=cut,
         outputbranchsel=branchsel,
         modules=modules,
         provenance=True,
@@ -73,5 +69,5 @@ p.run()
 addDatasetTag()
 
 print "DONE"
-os.system("ls -lR")
+# os.system("ls -lR")
 
