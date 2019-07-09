@@ -57,6 +57,8 @@ keep Photon_pt
 keep Photon_eta
 keep Photon_phi
 keep Photon_mass
+keep Photon_isScEtaEE
+keep Photon_r9
 keep Photon_cutBasedBitmap
 keep Photon_eCorr
 keep Photon_energyErr
