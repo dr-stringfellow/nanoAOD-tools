@@ -37,8 +37,7 @@ def base_configuration():
 
     config.Data.publication = False
     config.section_("Site")
-    # config.Site.storageSite = "T2_CH_CERNBOX"
-    config.Site.storageSite = "T2_DE_RWTH"
+    config.Site.storageSite = "T2_CH_CERN"
 
     return config
 
@@ -123,7 +122,7 @@ else:
     config.Data.totalUnits = -1
 
 config.Data.outputDatasetTag = name
-config.Data.outLFNDirBase = '/store/user/{0}/nanopost/{1}/{2}'.format(getUsernameFromSiteDB(),
+config.Data.outLFNDirBase = '/store/group/phys_exotica/monojet/{0}/nanopost/{1}/{2}'.format(getUsernameFromSiteDB(),
                                                                           tag,
                                                                           "MC" if is_mc else "Data")
 
