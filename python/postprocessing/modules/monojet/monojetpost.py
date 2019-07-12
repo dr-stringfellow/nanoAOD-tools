@@ -25,10 +25,10 @@ class monojetPost(Module):
         fatjets = Collection(event,"FatJet")
         has_jets = False
         if len(jets):
-            if jets[0].pt > 50:
+            if (jets[0].pt > 75) and (abs(jets[0].eta) < 2.5 ):
                 has_jets = True
         if len(fatjets):
-            if fatjets[0].pt > 50:
+            if (fatjets[0].pt > 75) and (abs(fatjets[0].eta) < 2.5 ):
                 has_jets = True
 
 
@@ -39,11 +39,11 @@ class monojetPost(Module):
         photons = Collection(event,"Photon")
         has_photon = False
         if len(photons):
-            if photons[0].pt > 100:
+            if photons[0].pt > 150:
                 has_photon = True
 
         # Check for MET
-        has_met = event.MET_pt > 50
+        has_met = event.MET_pt > 75
 
         # All together
         good = (has_lep or has_photon or has_met) and has_jets
