@@ -1,5 +1,6 @@
 submit_dataset_list(){
     LIST=${1}
+    touch submitted.txt
     while read DS; do
         if [[ $DS = \#* ]]; then
             continue
