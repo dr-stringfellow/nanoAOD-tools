@@ -17,6 +17,10 @@ class monojetPost(Module):
         pass
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
+
+        # Logic:
+        # All events need a minimum jet content
+        # If that does not exist, return False, reject event
         if event.nJet + event.nFatJet == 0:
             return False
 
@@ -30,21 +34,34 @@ class monojetPost(Module):
         if len(fatjets):
             if (fatjets[0].pt > 75) and (abs(fatjets[0].eta) < 2.5 ):
                 has_jets = True
+        if not has_jets:
+            return False
 
+        # All events surviving this far have jets.
+        # Now pass events if they have leptons, a photon or MET
 
-        # Check for leptons
-        has_lep = event.nMuon + event.nElectron > 0
+        # Check for muons
+        muons = Collection(event,"Muon")
+        for m in muons:
+            if m.pt > 20 and m.looseId:
+                return True
+
+        # Check for electrons
+        electrons = Collection(event,"Electron")
+        for e in electrons:
+            if e.pt > 20 and e.cutBased > 1:
+                return True
 
         # Check for photons
         photons = Collection(event,"Photon")
-        has_photon = False
-        if len(photons):
-            if photons[0].pt > 150:
-                has_photon = True
+        for p in photons:
+            if p.pt > 150 and p.electronVeto and (p.cutBasedBitmap > 1):
+                return True
 
         # Check for MET
-        has_met = event.MET_pt > 75
+        if event.MET_pt > 75:
+            return True
+        if event.PuppiMET_pt > 75:
+            return True
 
-        # All together
-        good = (has_lep or has_photon or has_met) and has_jets
-        return good
+        return False
