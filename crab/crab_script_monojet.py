@@ -33,7 +33,7 @@ selectors = [
     collectionMerger(input=["Photon"],output="Photon", selector=dict([("Photon",lambda x : x.cutBasedBitmap>0)])),
 ]
 mc_selectors = [
-    collectionMerger(input=["GenPart"],output="GenPart", selector=dict([("GenPart",lambda x : x.status==1])),
+    collectionMerger(input=["GenPart"],output="GenPart", selector=dict([("GenPart",lambda x : x.status==1)])),
     collectionMerger(input=["GenJet"],output="GenJet", selector=dict([("GenJet",lambda x : x.pt>20)]))
 ]
 if options['ismc']:
