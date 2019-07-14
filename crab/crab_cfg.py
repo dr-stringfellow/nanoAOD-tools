@@ -105,6 +105,7 @@ if not is_mc:
 
 config.JobType.inputFiles.append(crab_script)
 config.JobType.inputFiles.append('keep_and_drop_monojet.txt')
+config.JobType.inputFiles.append('triggers_nano_v5.txt')
 
 # Pass the dataset name as an argument so that
 # the script can write it into the output files.

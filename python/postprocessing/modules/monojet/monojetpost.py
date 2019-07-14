@@ -6,10 +6,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 import os
 
 class monojetPost(Module):
-    def __init__(self):
-        cmssw_base = os.getenv('CMSSW_BASE')
-        triggerlist = cmssw_base + "/src/PhysicsTools/NanoAODTools/python/postprocessing/modules/monojet/triggers_nano_v5.txt"
-
+    def __init__(self, triggerlist):
         with open(triggerlist, "r") as f:
             self._triggers = filter(lambda x: len(x), map(lambda x: x.strip(), f.readlines()))
 

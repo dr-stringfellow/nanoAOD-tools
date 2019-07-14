@@ -36,10 +36,12 @@ mc_selectors = [
     collectionMerger(input=["GenPart"],output="GenPart", selector=dict([("GenPart",lambda x : x.status==1)])),
     collectionMerger(input=["GenJet"],output="GenJet", selector=dict([("GenJet",lambda x : x.pt>20)]))
 ]
+
+triggerfile = 'triggers_nano_v5.txt'
 if options['ismc']:
     if options['year'] == '2017':
         modules = [
-            monojetPost(),
+            monojetPost(triggerfile),
             jetmetUncertainties2017(),
             jetmetUncertainties2017AK8Puppi(),
             PrefCorr(jetroot="L1prefiring_jetpt_2017BtoF.root",
@@ -49,7 +51,7 @@ if options['ismc']:
             ] + selectors + mc_selectors
     elif options['year'] == '2018':
         modules = [
-            monojetPost(),
+            monojetPost(triggerfile),
             jetmetUncertainties2018(),
             jetmetUncertainties2018AK8Puppi(),
             ] + selectors + mc_selectors
@@ -66,7 +68,7 @@ else:
         json = "Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt"
     elif options['year'] == '2018':
         json = "Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt"
-    modules = [monojetPost()] + selectors
+    modules = [monojetPost(triggerfile)] + selectors
     p=PostProcessor(outputDir=".",
         inputFiles=files,
         outputbranchsel=branchsel,
