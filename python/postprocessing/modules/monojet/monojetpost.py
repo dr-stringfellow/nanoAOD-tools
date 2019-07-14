@@ -3,10 +3,15 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection 
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
-
+import os
 class monojetPost(Module):
     def __init__(self):
-        pass
+        cmssw_base = os.getenv('CMSSW_BASE')
+        triggerlist = cmssw_base + "/src/PhysicsTools/NanoAODTools/python/postprocessing/modules/monojet/triggers_nano_v5.txt")
+
+        with open(triggerlist "r") as f:
+            self._triggers = filter(lambda x: len(x), map(lambda x: x.strip(), f.readlines()))
+
     def beginJob(self):
         pass
     def endJob(self):
@@ -17,6 +22,16 @@ class monojetPost(Module):
         pass
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
+
+        # Check triggers
+        has_trigger = False
+        for trigger in self._triggerlist:
+            if hasattr(event, trigger):
+                has_trigger |= getattr(event, trigger)
+                if has_trigger:
+                    break
+        if not has_trigger:
+            return False
 
         # Logic:
         # All events need a minimum jet content
@@ -43,7 +58,7 @@ class monojetPost(Module):
         # Check for muons
         muons = Collection(event,"Muon")
         for m in muons:
-            if m.pt > 20 and m.looseId:
+            if m.pt > 20 and m.looseId and (m.pfRelIso04_all < 0.4):
                 return True
 
         # Check for electrons

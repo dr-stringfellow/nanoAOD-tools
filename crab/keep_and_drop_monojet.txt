@@ -63,10 +63,16 @@ keep Photon_cutBasedBitmap
 keep Photon_eCorr
 keep Photon_energyErr
 keep Photon_electronVeto
-keep Photon_cleanmask
 
 keep nJet
 keep Jet_*
+drop Jet_qgl
+drop Jet_electronIdx1
+drop Jet_electronIdx2
+drop Jet_muonIdx1
+drop Jet_muonIdx2
+drop Jet_cleanmask
+
 keep fixedGridRho*
 
 keep nCorrT1METJet
@@ -74,14 +80,27 @@ keep CorrT1METJet_*
 
 keep nFatJet
 keep FatJet_*
+drop FatJet_btagDDBvL
+drop FatJet_btagDDCvB
+drop FatJet_btagDDCvL
+drop FatJet_btagHbb
+drop FatJet_deepTagMD_H4qvsQCD
+drop FatJet_deepTagMD_HbbvsQCD
+drop FatJet_deepTagMD_TvsQCD
+drop FatJet_deepTagMD_ZHbbvsQCD
+drop FatJet_deepTagMD_bbvsLight
+drop FatJet_deepTagMD_ccvsLight
+drop FatJet_deepTag_H
+drop FatJet_deepTag_TvsQCD
 
-keep PV_*
+keep PV_npvs*
 
 keep MET_*
 keep TkMET_*
 keep PuppiMET_*
 keep CaloMET_*
 keep PuppiMET_*
+drop *_sumEt
 
 keep Flag_*
 
@@ -94,9 +113,93 @@ keep *LHE*Weight*
 
 keep nTrigObj
 keep TrigObj_*
-keep HLT_*
-keep L1_*
 
 keep event
 keep run
 keep luminosityBlock
+
+keep HLT_Ele27_WPTight_Gsf
+keep HLT_Ele28_WPTight_Gsf
+keep HLT_Ele30_WPTight_Gsf
+keep HLT_Ele32_WPTight_Gsf
+keep HLT_Ele35_WPTight_Gsf
+keep HLT_Ele35_WPTight_Gsf_L1EGMT
+keep HLT_Ele38_WPTight_Gsf
+keep HLT_Ele40_WPTight_Gsf
+keep HLT_Ele32_WPTight_Gsf_L1DoubleEG
+
+keep HLT_HT450_Beamspot
+keep HLT_HT300_Beamspot
+
+keep HLT_IsoMu24
+keep HLT_IsoMu24_eta2p1
+keep HLT_IsoMu27
+keep HLT_IsoMu30
+
+keep HLT_Mu50
+keep HLT_Mu55
+
+keep HLT_PFHT590
+keep HLT_PFHT680
+keep HLT_PFHT780
+keep HLT_PFHT890
+keep HLT_PFHT1050
+keep HLT_PFHT500_PFMET100_PFMHT100_IDTight
+keep HLT_PFHT500_PFMET110_PFMHT110_IDTight
+keep HLT_PFHT700_PFMET85_PFMHT85_IDTight
+keep HLT_PFHT700_PFMET95_PFMHT95_IDTight
+keep HLT_PFHT800_PFMET75_PFMHT75_IDTight
+keep HLT_PFHT800_PFMET85_PFMHT85_IDTight
+
+keep HLT_PFMET110_PFMHT110_IDTight
+keep HLT_PFMET120_PFMHT120_IDTight
+keep HLT_PFMET130_PFMHT130_IDTight
+keep HLT_PFMET140_PFMHT140_IDTight
+
+keep HLT_PFMET120_PFMHT120_IDTight_PFHT60
+keep HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_PFHT60
+keep HLT_PFMETTypeOne120_PFMHT120_IDTight_PFHT60
+keep HLT_PFMETTypeOne110_PFMHT110_IDTight
+keep HLT_PFMETTypeOne120_PFMHT120_IDTight
+keep HLT_PFMETTypeOne130_PFMHT130_IDTight
+keep HLT_PFMETTypeOne140_PFMHT140_IDTight
+keep HLT_PFMETNoMu110_PFMHTNoMu110_IDTight
+keep HLT_PFMETNoMu120_PFMHTNoMu120_IDTight
+keep HLT_PFMETNoMu130_PFMHTNoMu130_IDTight
+keep HLT_PFMETNoMu140_PFMHTNoMu140_IDTight
+keep HLT_MonoCentralPFJet80_PFMETNoMu110_PFMHTNoMu110_IDTight
+keep HLT_MonoCentralPFJet80_PFMETNoMu120_PFMHTNoMu120_IDTight
+keep HLT_MonoCentralPFJet80_PFMETNoMu130_PFMHTNoMu130_IDTight
+keep HLT_MonoCentralPFJet80_PFMETNoMu140_PFMHTNoMu140_IDTight
+
+keep HLT_PFMET200_NotCleaned
+keep HLT_PFMET200_HBHECleaned
+keep HLT_PFMET250_HBHECleaned
+keep HLT_PFMET300_HBHECleaned
+keep HLT_PFMET200_HBHE_BeamHaloCleaned
+keep HLT_PFMETTypeOne200_HBHE_BeamHaloCleaned
+
+keep HLT_Photon300_NoHE
+
+keep HLT_Photon150
+keep HLT_Photon175
+keep HLT_Photon200
+keep HLT_Photon100EB_TightID_TightIso
+keep HLT_Photon110EB_TightID_TightIso
+keep HLT_Photon120EB_TightID_TightIso
+
+keep HLT_HT425
+
+keep HLT_DiJet110_35_Mjj650_PFMET110
+keep HLT_DiJet110_35_Mjj650_PFMET120
+keep HLT_DiJet110_35_Mjj650_PFMET130
+
+keep HLT_TripleJet110_35_35_Mjj650_PFMET110
+keep HLT_TripleJet110_35_35_Mjj650_PFMET120
+keep HLT_TripleJet110_35_35_Mjj650_PFMET130
+
+keep HLT_PFHT350
+
+keep HLT_PFMET100_PFMHT100_IDTight_PFHT60
+keep HLT_PFMETNoMu100_PFMHTNoMu100_IDTight_PFHT60
+keep HLT_PFMETTypeOne100_PFMHT100_IDTight_PFHT60
