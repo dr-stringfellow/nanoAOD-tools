@@ -104,6 +104,7 @@ drop *_sumEt
 
 keep Flag_*
 
+keep btagWeight_*
 keep genWeight
 keep Generator_*
 keep Pileup_*
@@ -118,18 +119,11 @@ keep event
 keep run
 keep luminosityBlock
 
-keep HLT_Ele27_WPTight_Gsf
-keep HLT_Ele28_WPTight_Gsf
-keep HLT_Ele30_WPTight_Gsf
 keep HLT_Ele32_WPTight_Gsf
 keep HLT_Ele35_WPTight_Gsf
 keep HLT_Ele35_WPTight_Gsf_L1EGMT
 keep HLT_Ele38_WPTight_Gsf
 keep HLT_Ele40_WPTight_Gsf
-keep HLT_Ele32_WPTight_Gsf_L1DoubleEG
-
-keep HLT_HT450_Beamspot
-keep HLT_HT300_Beamspot
 
 keep HLT_IsoMu24
 keep HLT_IsoMu24_eta2p1
@@ -144,12 +138,6 @@ keep HLT_PFHT680
 keep HLT_PFHT780
 keep HLT_PFHT890
 keep HLT_PFHT1050
-keep HLT_PFHT500_PFMET100_PFMHT100_IDTight
-keep HLT_PFHT500_PFMET110_PFMHT110_IDTight
-keep HLT_PFHT700_PFMET85_PFMHT85_IDTight
-keep HLT_PFHT700_PFMET95_PFMHT95_IDTight
-keep HLT_PFHT800_PFMET75_PFMHT75_IDTight
-keep HLT_PFHT800_PFMET85_PFMHT85_IDTight
 
 keep HLT_PFMET110_PFMHT110_IDTight
 keep HLT_PFMET120_PFMHT120_IDTight
@@ -184,11 +172,6 @@ keep HLT_Photon300_NoHE
 keep HLT_Photon150
 keep HLT_Photon175
 keep HLT_Photon200
-keep HLT_Photon100EB_TightID_TightIso
-keep HLT_Photon110EB_TightID_TightIso
-keep HLT_Photon120EB_TightID_TightIso
-
-keep HLT_HT425
 
 keep HLT_DiJet110_35_Mjj650_PFMET110
 keep HLT_DiJet110_35_Mjj650_PFMET120
@@ -197,9 +180,3 @@ keep HLT_DiJet110_35_Mjj650_PFMET130
 keep HLT_TripleJet110_35_35_Mjj650_PFMET110
 keep HLT_TripleJet110_35_35_Mjj650_PFMET120
 keep HLT_TripleJet110_35_35_Mjj650_PFMET130
-
-keep HLT_PFHT350
-
-keep HLT_PFMET100_PFMHT100_IDTight_PFHT60
-keep HLT_PFMETNoMu100_PFMHTNoMu100_IDTight_PFHT60
-keep HLT_PFMETTypeOne100_PFMHT100_IDTight_PFHT60
