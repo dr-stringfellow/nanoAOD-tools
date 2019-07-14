@@ -23,7 +23,13 @@ for argument in sys.argv:
             options[prefix] = value
 options['ismc'] = options['ismc'].lower() == "true"
 
-files = inputFiles()
+test = False
+if test:
+    files = ['299516D6-8D79-F542-B7F6-C7C041A2E1D0.root']
+    maxEntries = 1000
+else:
+    files = inputFiles()
+    maxEntries = 0
 branchsel = "keep_and_drop_monojet.txt"
 
 selectors = [
@@ -59,9 +65,11 @@ if options['ismc']:
     p = PostProcessor(
         outputDir=".",
         inputFiles=files,
+        branchsel=branchsel,
         outputbranchsel=branchsel,
         modules=modules,
         provenance=True,
+        maxEntries=maxEntries,
         fwkJobReport=True)
 else:
     if options['year'] == '2017':
@@ -71,10 +79,12 @@ else:
     modules = [monojetPost(triggerfile)] + selectors
     p=PostProcessor(outputDir=".",
         inputFiles=files,
+        branchsel=branchsel,
         outputbranchsel=branchsel,
         modules=modules,
         provenance=True,
         fwkJobReport=True,
+        maxEntries=maxEntries,
         jsonInput=json)
 p.run()
 
