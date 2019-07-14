@@ -4,6 +4,7 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 import os
+
 class monojetPost(Module):
     def __init__(self):
         cmssw_base = os.getenv('CMSSW_BASE')
@@ -64,7 +65,7 @@ class monojetPost(Module):
         jets = Collection(event,"Jet")
         for j in jets:
             # tighter than tight WP for both years
-            if j.pt > 30 and abs(j.eta) < 2.5 and  j.btagDeepB > 0.81:
+            if j.pt > 20 and abs(j.eta) < 2.5 and  j.btagDeepB > 0.81:
                 return False
 
         # All events need a minimum jet content
