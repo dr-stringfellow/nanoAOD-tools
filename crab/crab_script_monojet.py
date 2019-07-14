@@ -65,7 +65,6 @@ if options['ismc']:
     p = PostProcessor(
         outputDir=".",
         inputFiles=files,
-        branchsel=branchsel,
         outputbranchsel=branchsel,
         modules=modules,
         provenance=True,
@@ -79,7 +78,6 @@ else:
     modules = [monojetPost(triggerfile)] + selectors
     p=PostProcessor(outputDir=".",
         inputFiles=files,
-        branchsel=branchsel,
         outputbranchsel=branchsel,
         modules=modules,
         provenance=True,
