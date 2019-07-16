@@ -33,9 +33,9 @@ else:
 branchsel = "keep_and_drop_monojet.txt"
 
 selectors = [
-    collectionMerger(input=["Jet"],output="Jet", selector=dict([("Jet",lambda x : x.pt>20)])),
-    collectionMerger(input=["Muon"],output="Muon", selector=dict([("Muon",lambda x : x.pt>10 and x.looseId and x.pfRelIso04_all < 0.4)])),
-    collectionMerger(input=["Electron"],output="Electron", selector=dict([("Electron",lambda x : x.pt>10 and x.cutBased > 0)])),
+    collectionMerger(input=["Jet"],output="Jet", selector=dict([("Jet",lambda x : x.pt>19.9)])),
+    collectionMerger(input=["Muon"],output="Muon", selector=dict([("Muon",lambda x : x.pt>9.9 and x.looseId and x.pfRelIso04_all < 0.4)])),
+    collectionMerger(input=["Electron"],output="Electron", selector=dict([("Electron",lambda x : x.pt>9.9 and x.cutBased > 0)])),
     collectionMerger(input=["Photon"],output="Photon", selector=dict([("Photon",lambda x : x.cutBasedBitmap>0)])),
 ]
 mc_selectors = [
