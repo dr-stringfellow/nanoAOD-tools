@@ -32,7 +32,7 @@ def base_configuration():
     config.section_("Data")
     config.Data.inputDBS = 'global'
     config.Data.splitting = 'FileBased'
-    config.Data.unitsPerJob = 1
+    config.Data.unitsPerJob = 2
     # config.Data.totalUnits = 10
 
     config.Data.publication = False
@@ -81,7 +81,7 @@ def short_name(dataset):
 
     return name
 
-tag = "14Jul19"
+tag = "16Jul19"
 dataset = get_dataset()
 name = short_name(dataset)
 config = base_configuration()
@@ -115,7 +115,6 @@ config.JobType.scriptArgs = ["dataset={}".format(name),
 
 config.General.requestName = cut_string(name)
 config.Data.inputDataset = dataset
-config.Data.unitsPerJob = 1
 
 if "test" in tag:
     config.Data.totalUnits = 1
