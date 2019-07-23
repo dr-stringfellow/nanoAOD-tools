@@ -32,7 +32,7 @@ def base_configuration():
     config.section_("Data")
     config.Data.inputDBS = 'global'
     config.Data.splitting = 'FileBased'
-    config.Data.unitsPerJob = 2
+    config.Data.unitsPerJob = 1
     # config.Data.totalUnits = 10
 
     config.Data.publication = False
@@ -122,9 +122,8 @@ else:
     config.Data.totalUnits = -1
 
 config.Data.outputDatasetTag = name
-config.Data.outLFNDirBase = '/store/group/phys_exotica/monojet/{0}/nanopost/{1}/{2}'.format(getUsernameFromSiteDB(),
-                                                                          tag,
-                                                                          "MC" if is_mc else "Data")
+config.Data.outLFNDirBase = '/store/group/phys_exotica/monojet/{0}/nanopost/{1}/'.format(getUsernameFromSiteDB(),
+                                                                          tag)
 
 
 config.General.workArea = "./wdir/{}".format(tag)
