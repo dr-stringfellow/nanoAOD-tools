@@ -69,7 +69,8 @@ def short_name(dataset):
     m=re.match(r".*(ext\d+).*",conditions);
     if m:
         name = name + "_" + m.groups()[0]
-
+    if 'newpmx' in conditions:
+        name = name + '_newpmx'
     if "RunIIFall17" in conditions:
         name = name + "_2017"
     elif 'RunIIAutumn18' in conditions:
