@@ -5,9 +5,9 @@ if [ "`tty`" != "not a tty" ]; then
   echo "YOU SHOULD NOT RUN THIS IN INTERACTIVE, IT DELETES YOUR LOCAL FILES"
 else
 
-ls -lR .
-echo "ENV..................................."
-env 
+# ls -lR .
+# echo "ENV..................................."
+# env 
 echo "VOMS"
 voms-proxy-info -all
 echo "CMSSW BASE, python path, pwd"
