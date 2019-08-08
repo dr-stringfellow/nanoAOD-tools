@@ -109,6 +109,7 @@ keep genWeight
 keep Generator_*
 keep Pileup_*
 keep puWeight*
+keep Prefire*
 
 keep LHE_*
 keep *LHE*Weight*
