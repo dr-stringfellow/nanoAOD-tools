@@ -108,6 +108,7 @@ keep btagWeight_*
 keep genWeight
 keep Generator_*
 keep Pileup_*
+keep Prefire*
 
 keep LHE_*
 keep *LHE*Weight*
