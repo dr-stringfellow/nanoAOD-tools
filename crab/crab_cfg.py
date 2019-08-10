@@ -37,7 +37,7 @@ def base_configuration():
 
     config.Data.publication = False
     config.section_("Site")
-    config.Site.storageSite = "T2_CH_CERN"
+    config.Site.storageSite = "T2_CH_CERNBOX"
 
     return config
 
@@ -69,7 +69,7 @@ def short_name(dataset):
     m=re.match(r".*(ext\d+).*",conditions);
     if m:
         name = name + "_" + m.groups()[0]
-    if 'newpmx' in conditions:
+    if 'newpmx' in conditions or 'new_pmx' in conditions:
         name = name + '_newpmx'
     if "RunIIFall17" in conditions:
         name = name + "_2017"
@@ -82,7 +82,7 @@ def short_name(dataset):
 
     return name
 
-tag = "16Jul19"
+tag = "10Aug19"
 dataset = get_dataset()
 name = short_name(dataset)
 config = base_configuration()
@@ -123,9 +123,10 @@ else:
     config.Data.totalUnits = -1
 
 config.Data.outputDatasetTag = name
-config.Data.outLFNDirBase = '/store/group/phys_exotica/monojet/{0}/nanopost/{1}/'.format(getUsernameFromSiteDB(),
+# config.Data.outLFNDirBase = '/store/group/phys_exotica/monojet/{0}/nanopost/{1}/'.format(getUsernameFromSiteDB(),
+                                                                        #   tag)
+config.Data.outLFNDirBase = '/store/user/{0}/nanopost/{1}/'.format(getUsernameFromSiteDB(),
                                                                           tag)
-
 
 config.General.workArea = "./wdir/{}".format(tag)
 config.JobType.allowUndistributedCMSSW = True
