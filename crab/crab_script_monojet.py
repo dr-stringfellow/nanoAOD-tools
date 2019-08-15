@@ -7,7 +7,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import *
 from PhysicsTools.NanoAODTools.postprocessing.framework.crabhelper import inputFiles,runsAndLumis, addDatasetTag
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import *
-from PhysicsTools.NanoAODTools.postprocessing.modules.monojet.monojetpost import monojetPost
+from PhysicsTools.NanoAODTools.postprocessing.modules.monojet.monojetpost import monojetPost, jet_pt_names
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetUncertainties import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.PrefireCorr import PrefCorr
@@ -32,8 +32,15 @@ else:
     maxEntries = 0
 branchsel = "keep_and_drop_monojet.txt"
 
+
+def jetptcut(jet, value):
+    for name in jet_pt_names:
+        if getattr(jet, name) > value:
+            return True
+    return False
+
 selectors = [
-    collectionMerger(input=["Jet"],output="Jet", selector=dict([("Jet",lambda x : x.pt>19.9)])),
+    collectionMerger(input=["Jet"],output="Jet", selector=dict([("Jet",lambda x : jetptcut(x,19.9))])),
     collectionMerger(input=["Muon"],output="Muon", selector=dict([("Muon",lambda x : x.pt>9.9 and x.looseId and x.pfRelIso04_all < 0.4)])),
     collectionMerger(input=["Electron"],output="Electron", selector=dict([("Electron",lambda x : x.pt>9.9 and x.cutBased > 0)])),
     collectionMerger(input=["Photon"],output="Photon", selector=dict([("Photon",lambda x : x.cutBasedBitmap>0)])),
