@@ -5,6 +5,8 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collect
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 import os
 
+jet_pt_names = ['pt','pt_jesTotalDown','pt_jesTotalUp','pt_jerDown','pt_jerUp','pt_nom','pt_raw']
+met_pt_names = ['pt','pt_jesTotalDown','pt_jesTotalUp','pt_jerDown','pt_jerUp','pt_nom','pt_unclustEnUp','pt_unclustEnDown']
 class monojetPost(Module):
     def __init__(self, triggerlist):
         with open(triggerlist, "r") as f:
@@ -26,11 +28,17 @@ class monojetPost(Module):
                     return True
         return False
     def has_jets(self, jets, fatjets):
-        if len(jets):
-            if (jets[0].pt > 75):
-                return True
-        if len(fatjets):
-            if (fatjets[0].pt > 75):
+        for name in jet_pt_names:
+            for j in jets:
+                if getattr(j,name) > 75:
+                    return True
+            for fj in fatjets:
+                if (getattr(fj,name) > 75):
+                        return True
+            return False
+    def has_met(self, event):
+        for name in met_pt_names:
+            if getattr(event, 'MET_'+name) > 75:
                 return True
         return False
     def has_muons(self, event):
@@ -85,7 +93,7 @@ class monojetPost(Module):
             return True
 
         # Check for MET
-        if event.MET_pt > 75:
+        if self.has_met(event):
             return True
         if event.PuppiMET_pt > 75:
             return True
