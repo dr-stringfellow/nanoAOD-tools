@@ -12,6 +12,7 @@ from PhysicsTools.NanoAODTools.postprocessing.modules.monojet.monojetpost import
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetUncertainties import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.PrefireCorr import PrefCorr
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.collectionMerger import collectionMerger
+from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import puAutoWeight_2017, puAutoWeight_2018
 
 # Loop over input arguments
 options = {}
@@ -50,16 +51,18 @@ if options['ismc']:
             monojetPost(triggerfile),
             jetmetUncertainties2017(),
             jetmetUncertainties2017AK8Puppi(),
+            puAutoWeight_2017(),
             PrefCorr(jetroot="L1prefiring_jetpt_2017BtoF.root",
                      jetmapname="L1prefiring_jetpt_2017BtoF",
                      photonroot="L1prefiring_photonpt_2017BtoF.root",
-                     photonmapname="L1prefiring_photonpt_2017BtoF")
+                     photonmapname="L1prefiring_photonpt_2017BtoF"),
             ] + selectors + mc_selectors
     elif options['year'] == '2018':
         modules = [
             monojetPost(triggerfile),
             jetmetUncertainties2018(),
             jetmetUncertainties2018AK8Puppi(),
+            puAutoWeight_2018()
             ] + selectors + mc_selectors
 
     p = PostProcessor(
