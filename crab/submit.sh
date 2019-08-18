@@ -1,5 +1,6 @@
-SUBMITFILE="./wdir/10Aug19/submitted.txt"
-
+TAG=$(grep ^tag crab_cfg.py | sed "s|.*= *||g;s|\"||g")
+SUBMITFILE="./wdir/${TAG}/submitted.txt"
+mkdir -p $(dirname $SUBMITFILE)
 submit_dataset_list(){
     LIST=${1}
     touch $SUBMITFILE
@@ -20,7 +21,6 @@ submit_dataset_list(){
         if [ $code -eq 0 ]; then
             echo $DS >> $SUBMITFILE
         fi
-        # break
     done < $LIST
 }
 
