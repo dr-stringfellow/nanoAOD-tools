@@ -3,6 +3,7 @@ HLT_Ele35_WPTight_Gsf
 HLT_Ele35_WPTight_Gsf_L1EGMT
 HLT_Ele38_WPTight_Gsf
 HLT_Ele40_WPTight_Gsf
+HLT_Ele115_CaloIdVT_GsfTrkIdT
 
 HLT_IsoMu24
 HLT_IsoMu24_eta2p1
