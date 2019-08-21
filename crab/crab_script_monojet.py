@@ -55,9 +55,9 @@ triggerfile = 'triggers_nano_v5.txt'
 if options['ismc']:
     if options['year'] == '2017':
         modules = [
-            monojetPost(triggerfile),
             jetmetUncertainties2017(),
             jetmetUncertainties2017AK8Puppi(),
+            monojetPost(triggerfile),
             puAutoWeight_2017(),
             PrefCorr(jetroot="L1prefiring_jetpt_2017BtoF.root",
                      jetmapname="L1prefiring_jetpt_2017BtoF",
@@ -66,9 +66,9 @@ if options['ismc']:
             ] + selectors + mc_selectors
     elif options['year'] == '2018':
         modules = [
-            monojetPost(triggerfile),
             jetmetUncertainties2018(),
             jetmetUncertainties2018AK8Puppi(),
+            monojetPost(triggerfile),
             puAutoWeight_2018()
             ] + selectors + mc_selectors
 
