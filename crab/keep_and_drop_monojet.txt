@@ -126,6 +126,7 @@ keep HLT_Ele35_WPTight_Gsf
 keep HLT_Ele35_WPTight_Gsf_L1EGMT
 keep HLT_Ele38_WPTight_Gsf
 keep HLT_Ele40_WPTight_Gsf
+keep HLT_Ele115_CaloIdVT_GsfTrkIdT
 
 keep HLT_IsoMu24
 keep HLT_IsoMu24_eta2p1
