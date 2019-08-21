@@ -8,10 +8,8 @@ import os
 jet_pt_names = ['pt','pt_jesTotalDown','pt_jesTotalUp','pt_jerDown','pt_jerUp','pt_nom','pt_raw']
 met_pt_names = ['pt','pt_jesTotalDown','pt_jesTotalUp','pt_jerDown','pt_jerUp','pt_nom','pt_unclustEnUp','pt_unclustEnDown']
 class monojetPost(Module):
-    def __init__(self, triggerlist):
-        with open(triggerlist, "r") as f:
-            self._triggers = filter(lambda x: len(x), map(lambda x: x.strip(), f.readlines()))
-
+    def __init__(self):
+        pass
     def beginJob(self):
         pass
     def endJob(self):
@@ -20,13 +18,6 @@ class monojetPost(Module):
         pass
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
-    def has_trigger(self, event):
-        # Check triggers
-        for trigger in self._triggers:
-            if hasattr(event, trigger):
-                if getattr(event, trigger):
-                    return True
-        return False
     def has_jets(self, jets, fatjets):
         for name in jet_pt_names:
             for j in jets:
@@ -69,9 +60,6 @@ class monojetPost(Module):
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
 
-        ### Trigger
-        if not self.has_trigger(event):
-            return False
         # ### Vetoes
         # # B jet veto
         jets = Collection(event,"Jet")

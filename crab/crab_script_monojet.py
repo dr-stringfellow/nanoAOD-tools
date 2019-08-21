@@ -8,6 +8,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.crabhelper import inputF
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.monojet.monojetpost import monojetPost, jet_pt_names
+from PhysicsTools.NanoAODTools.postprocessing.modules.monojet.triggerselector import triggerSelector
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetUncertainties import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.PrefireCorr import PrefCorr
@@ -16,18 +17,23 @@ from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer im
 
 # Loop over input arguments
 options = {}
-prefixes = ['dataset', 'ismc', 'year']
+prefixes = ['dataset', 'ismc', 'year','nofilter','test']
 for argument in sys.argv:
     for prefix in prefixes:
         if argument.startswith(prefix):
             value = argument.split('=')[-1]
             options[prefix] = value
-options['ismc'] = options['ismc'].lower() == "true"
+for p in prefixes:
+    if p not in options.keys():
+        options[p] = ''
 
-test = False
-if test:
-    files = ['299516D6-8D79-F542-B7F6-C7C041A2E1D0.root']
-    maxEntries = 1000
+options['ismc'] = options['ismc'].lower() == "true"
+options['nofilter'] = options['nofilter'].lower() == "true"
+options['test'] = options['test'].lower() == "true"
+
+if options['test']:
+    files = ['./GJets_HT-400To600_2017.root']
+    maxEntries = 0
 else:
     files = inputFiles()
     maxEntries = 0
@@ -40,24 +46,32 @@ def jetptcut(jet, value):
             return True
     return False
 
-selectors = [
-    collectionMerger(input=["Jet"],output="Jet", selector=dict([("Jet",lambda x : jetptcut(x,19.9))])),
-    collectionMerger(input=["Muon"],output="Muon", selector=dict([("Muon",lambda x : x.pt>9.9 and x.looseId and x.pfRelIso04_all < 0.4)])),
-    collectionMerger(input=["Electron"],output="Electron", selector=dict([("Electron",lambda x : x.pt>9.9 and x.cutBased > 0)])),
-    collectionMerger(input=["Photon"],output="Photon", selector=dict([("Photon",lambda x : x.cutBasedBitmap>0)])),
-]
-mc_selectors = [
-    collectionMerger(input=["GenPart"],output="GenPart", selector=dict([("GenPart",lambda x : x.status==1)])),
-    collectionMerger(input=["GenJet"],output="GenJet", selector=dict([("GenJet",lambda x : x.pt>20)]))
-]
+if options['nofilter']:
+    common_modules = []
+    selectors = []
+    mc_selectors = []
+    trigger_selector = []
+else:
+    triggerfile = 'triggers_nano_v5.txt'
+    trigger_selector = [triggerSelector(triggerfile)]
+    common_modules = [monojetPost()]
+    selectors = [
+        collectionMerger(input=["Jet"],output="Jet", selector=dict([("Jet",lambda x : jetptcut(x,19.9))])),
+        collectionMerger(input=["Muon"],output="Muon", selector=dict([("Muon",lambda x : x.pt>9.9 and x.looseId and x.pfRelIso04_all < 0.4)])),
+        collectionMerger(input=["Electron"],output="Electron", selector=dict([("Electron",lambda x : x.pt>9.9 and x.cutBased > 0)])),
+        collectionMerger(input=["Photon"],output="Photon", selector=dict([("Photon",lambda x : x.cutBasedBitmap>0)])),
+    ]
+    mc_selectors = [
+        collectionMerger(input=["GenPart"],output="GenPart", selector=dict([("GenPart",lambda x : x.status==1)])),
+        collectionMerger(input=["GenJet"],output="GenJet", selector=dict([("GenJet",lambda x : x.pt>20)]))
+    ]
 
-triggerfile = 'triggers_nano_v5.txt'
 if options['ismc']:
     if options['year'] == '2017':
-        modules = [
+        modules = trigger_selector + [
             jetmetUncertainties2017(),
-            jetmetUncertainties2017AK8Puppi(),
-            monojetPost(triggerfile),
+            jetmetUncertainties2017AK8Puppi()
+            ] + common_modules + [
             puAutoWeight_2017(),
             PrefCorr(jetroot="L1prefiring_jetpt_2017BtoF.root",
                      jetmapname="L1prefiring_jetpt_2017BtoF",
@@ -65,11 +79,11 @@ if options['ismc']:
                      photonmapname="L1prefiring_photonpt_2017BtoF"),
             ] + selectors + mc_selectors
     elif options['year'] == '2018':
-        modules = [
+        modules = trigger_selector + [
             jetmetUncertainties2018(),
-            jetmetUncertainties2018AK8Puppi(),
-            monojetPost(triggerfile),
-            puAutoWeight_2018()
+            jetmetUncertainties2018AK8Puppi()
+            ] + common_modules + [
+                puAutoWeight_2018()
             ] + selectors + mc_selectors
 
     p = PostProcessor(
@@ -85,7 +99,7 @@ else:
         json = "Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt"
     elif options['year'] == '2018':
         json = "Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt"
-    modules = [monojetPost(triggerfile)] + selectors
+    modules = trigger_selector + common_modules + selectors
     p=PostProcessor(outputDir=".",
         inputFiles=files,
         outputbranchsel=branchsel,
