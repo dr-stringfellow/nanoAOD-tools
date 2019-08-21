@@ -112,6 +112,8 @@ config.JobType.inputFiles.append('triggers_nano_v5.txt')
 config.JobType.scriptArgs = ["dataset={}".format(name),
                              "ismc={}".format(is_mc),
                              "year={}".format(year)]
+if 'sync' in tag:
+    config.JobType.scriptArgs.append("nofilter=true")
 
 config.General.requestName = cut_string(name)
 config.Data.inputDataset = dataset
