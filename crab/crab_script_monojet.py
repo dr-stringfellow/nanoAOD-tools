@@ -11,6 +11,7 @@ from PhysicsTools.NanoAODTools.postprocessing.modules.monojet.monojetpost import
 from PhysicsTools.NanoAODTools.postprocessing.modules.monojet.triggerselector import triggerSelector
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetUncertainties import *
+from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetRecalib import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.PrefireCorr import PrefCorr
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.collectionMerger import collectionMerger
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import puAutoWeight_2016, puAutoWeight_2017, puAutoWeight_2018
@@ -32,8 +33,9 @@ options['nofilter'] = options['nofilter'].lower() == "true"
 options['test'] = options['test'].lower() == "true"
 
 if options['test']:
-    files = ['./SingleMuon_Run2016D.root']
-    maxEntries = 0
+    files = ['./GJets_HT-400To600_2018.root']
+    options['dataset'] = 'GJets_HT-400To600_2018'
+    maxEntries = 1000
 else:
     files = inputFiles()
     maxEntries = 0
@@ -115,8 +117,8 @@ if options['ismc']:
             ] + selectors + mc_selectors
     elif options['year'] == '2018':
         modules = trigger_selector + [
-            jetmetUncertainties2018(),
-            jetmetUncertainties2018AK8Puppi()
+            jetmetUncertaintiesProducer("2018", "Autumn18_V19_MC", [ "Total" ], redoJEC=True, jerTag="Autumn18_V7_MC"),
+            jetmetUncertaintiesProducer("2018", "Autumn18_V19_MC", [ "Total" ], jetType="AK8PFPuppi", redoJEC=True, jerTag="Autumn18_V7_MC"),
             ] + common_modules + [
                 puAutoWeight_2018()
             ] + selectors + mc_selectors
@@ -130,13 +132,21 @@ if options['ismc']:
         maxEntries=maxEntries,
         fwkJobReport=True)
 else:
+    modules = trigger_selector + common_modules + selectors
     if options['year'] == '2016':
         json = "Cert_271036-284044_13TeV_ReReco_07Aug2017_Collisions16_JSON.txt"
     elif options['year'] == '2017':
         json = "Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt"
     elif options['year'] == '2018':
         json = "Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt"
-    modules = trigger_selector + common_modules + selectors
+        if '2018A' in options['dataset']:
+            modules.append(jetRecalib2018A())
+        elif '2018B' in options['dataset']:
+            modules.append(jetRecalib2018B())
+        elif '2018C' in options['dataset']:
+            modules.append(jetRecalib2018C())
+        elif '2018D' in options['dataset']:
+            modules.append(jetRecalib2018D())
     p=PostProcessor(outputDir=".",
         inputFiles=files,
         outputbranchsel=branchsel,
