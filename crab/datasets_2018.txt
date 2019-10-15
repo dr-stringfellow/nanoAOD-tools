@@ -61,7 +61,9 @@
 /TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19_ext1-v1/NANOAODSIM
 /TTJets_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19-v1/NANOAODSIM
 /TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19-v1/NANOAODSIM
+/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19_ext3-v1/NANOAODSIM
 /TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19-v1/NANOAODSIM
+/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19_ext2-v1/NANOAODSIM
 /TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19-v1/NANOAODSIM
 
 # ST
@@ -108,7 +110,12 @@
 
 #### SIGNALS
 # Hinv
+/GluGlu_HToInvisible_M125_TuneCP5_PSweights_13TeV_powheg_pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19-v1/NANOAODSIM
 /VBF_HToInvisible_M125_TuneCP5_PSweights_13TeV_powheg_pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19-v1/NANOAODSIM
+/WminusH_WToQQ_HToInvisible_M125_TuneCP5_PSweights_13TeV_powheg_pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19-v1/NANOAODSIM
+/WplusH_WToQQ_HToInvisible_M125_TuneCP5_PSweights_13TeV_powheg_pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19-v1/NANOAODSIM
+/ZH_ZToQQ_HToInvisible_M125_TuneCP5_PSweights_13TeV_powheg_pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19-v1/NANOAODSIM
+/ggZH_ZToQQ_HToInvisible_M125_TuneCP5_PSweights_13TeV_powheg_pythia8/RunIIAutumn18NanoAODv5-Nano1June2019_102X_upgrade2018_realistic_v19-v1/NANOAODSIM
 /MET/Run2018A-Nano1June2019-v1/NANOAOD
 /MET/Run2018B-Nano1June2019-v1/NANOAOD
 /MET/Run2018C-Nano1June2019-v1/NANOAOD
@@ -117,13 +124,4 @@
 /EGamma/Run2018B-Nano1June2019-v1/NANOAOD
 /EGamma/Run2018C-Nano1June2019-v1/NANOAOD
 /EGamma/Run2018D-Nano1June2019-v1/NANOAOD
-/SingleMuon/Run2018A-Nano1June2019-v1/NANOAOD
-/SingleMuon/Run2018B-Nano1June2019-v1/NANOAOD
-/SingleMuon/Run2018C-Nano1June2019-v1/NANOAOD
-/SingleMuon/Run2018D-Nano1June2019-v1/NANOAOD
-/JetHT/Run2018A-Nano1June2019-v2/NANOAOD
-/JetHT/Run2018B-Nano1June2019-v2/NANOAOD
-/JetHT/Run2018C-Nano1June2019-v1/NANOAOD
-/JetHT/Run2018C-Nano1June2019-v2/NANOAOD
-/JetHT/Run2018D-Nano1June2019_ver2-v1/NANOAOD
 
