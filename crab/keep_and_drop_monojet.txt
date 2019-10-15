@@ -2,8 +2,10 @@ drop *
 
 keep nGenPart
 keep GenPart_*
-
+keep GenDressed*
 keep GenMET_*
+drop GenPart_genPartIdxMother
+drop GenDressedLepton_mass
 
 keep nGenJet
 keep GenJet_*
@@ -16,7 +18,6 @@ keep Muon_pt
 keep Muon_eta
 keep Muon_phi
 keep Muon_charge
-keep Muon_softId
 keep Muon_looseId
 keep Muon_tightId
 keep Muon_mediumId
@@ -61,7 +62,6 @@ keep Tau_eta
 keep Tau_phi
 keep Tau_idDecayMode
 keep Tau_idDecayModeNewDMs
-keep Tau_cleanmask
 keep Tau_idMVAnewDM2017v2
 keep Tau_idMVAoldDM2017v2
 keep Tau_idAntiEle
@@ -71,7 +71,6 @@ keep nPhoton
 keep Photon_pt
 keep Photon_eta
 keep Photon_phi
-keep Photon_mass
 keep Photon_isSc*
 keep Photon_r9
 keep Photon_cutBased*
@@ -82,6 +81,7 @@ keep Photon_electronVeto
 keep Photon_pf*
 keep Photon_sieie
 keep Photon_vidNestedWPBitmap
+drop Photon_cutBasedV1Bitmap
 
 keep nJet
 keep Jet_*
@@ -91,6 +91,9 @@ drop Jet_electronIdx2
 drop Jet_muonIdx1
 drop Jet_muonIdx2
 drop Jet_cleanmask
+drop Jet_bReg*
+drop Jet_btagCMVA
+drop Jet_genJetIdx
 
 keep fixedGridRho*
 
@@ -169,10 +172,18 @@ keep HLT_PFMET130_PFMHT130_IDTight
 keep HLT_PFMET140_PFMHT140_IDTight
 
 keep HLT_PFMET170
+keep HLT_PFMET170_NotCleaned
+keep HLT_PFMET170_HBHECleaned
+keep HLT_PFMET170_BeamHaloCleaned
+keep HLT_PFMET170_HBHE_BeamHaloCleaned
+
+
 keep HLT_PFMETNoMu90_PFMHTNoMu90_IDTight
 keep HLT_PFMETNoMu100_PFMHTNoMu100_IDTight
 keep HLT_PFMETNoMu110_PFMHTNoMu110_IDTight
 keep HLT_PFMETNoMu120_PFMHTNoMu120_IDTight
+keep HLT_PFMETNoMu130_PFMHTNoMu130_IDTight
+keep HLT_PFMETNoMu140_PFMHTNoMu140_IDTight
 
 keep HLT_PFMET120_PFMHT120_IDTight_PFHT60
 keep HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_PFHT60
@@ -181,10 +192,7 @@ keep HLT_PFMETTypeOne110_PFMHT110_IDTight
 keep HLT_PFMETTypeOne120_PFMHT120_IDTight
 keep HLT_PFMETTypeOne130_PFMHT130_IDTight
 keep HLT_PFMETTypeOne140_PFMHT140_IDTight
-keep HLT_PFMETNoMu110_PFMHTNoMu110_IDTight
-keep HLT_PFMETNoMu120_PFMHTNoMu120_IDTight
-keep HLT_PFMETNoMu130_PFMHTNoMu130_IDTight
-keep HLT_PFMETNoMu140_PFMHTNoMu140_IDTight
+
 keep HLT_MonoCentralPFJet80_PFMETNoMu110_PFMHTNoMu110_IDTight
 keep HLT_MonoCentralPFJet80_PFMETNoMu120_PFMHTNoMu120_IDTight
 keep HLT_MonoCentralPFJet80_PFMETNoMu130_PFMHTNoMu130_IDTight
