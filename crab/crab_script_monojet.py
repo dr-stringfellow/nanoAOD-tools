@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 import os
 import sys
-from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import * 
+import re
+from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import *
 
 #this takes care of converting the input files from CRAB
 from PhysicsTools.NanoAODTools.postprocessing.framework.crabhelper import inputFiles,runsAndLumis, addDatasetTag
@@ -14,31 +15,7 @@ from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetUncertainties im
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.PrefireCorr import PrefCorr
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.collectionMerger import collectionMerger
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import puAutoWeight_2016, puAutoWeight_2017, puAutoWeight_2018
-
-# Loop over input arguments
-options = {}
-prefixes = ['dataset', 'ismc', 'year','nofilter','test']
-for argument in sys.argv:
-    for prefix in prefixes:
-        if argument.startswith(prefix):
-            value = argument.split('=')[-1]
-            options[prefix] = value
-for p in prefixes:
-    if p not in options.keys():
-        options[p] = ''
-
-options['ismc'] = options['ismc'].lower() == "true"
-options['nofilter'] = options['nofilter'].lower() == "true"
-options['test'] = options['test'].lower() == "true"
-
-if options['test']:
-    files = ['./SingleMuon_Run2016D.root']
-    maxEntries = 0
-else:
-    files = inputFiles()
-    maxEntries = 0
-branchsel = "keep_and_drop_monojet.txt"
-
+from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2 import createJMECorrector
 
 def jetptcut(jet, value):
     for name in jet_pt_names:
@@ -63,92 +40,149 @@ def filter_genpart(genpart):
     good |= (abs(genpart.pdgId) in [11,12,13,14,15,16,22,23,24])
     return good
 
+def extract_period(dataset):
+    m = re.match('.*201\d([A-Z])', dataset)
+    if not m:
+        raise RuntimeError("Could not extract run period from dataset: " + dataset)
+    return m.groups()[0]
 
 def filter_muons(muon):
     return (muon.pt>9.9) and (muon.looseId) and (muon.pfRelIso04_all < 0.4)
 
-if options['nofilter']:
-    common_modules = []
-    selectors = []
-    mc_selectors = []
-    trigger_selector = []
-else:
-    triggerfile = 'triggers_nano_v5.txt'
-    trigger_selector = [triggerSelector(triggerfile)]
-    common_modules = [monojetPost()]
-    selectors = [
-        collectionMerger(input=["Jet"],output="Jet", selector={"Jet" : lambda x : jetptcut(x,19.9)}),
-        collectionMerger(input=["FatJet"],output="FatJet", selector={"FatJet" : lambda x : jetptcut(x,75.0)}),
-        collectionMerger(input=["Muon"],output="Muon", selector={"Muon" : filter_muons}),
-        collectionMerger(input=["Electron"],output="Electron", selector={"Electron" : filter_electrons}),
-        collectionMerger(input=["Photon"],output="Photon", selector={"Photon" : filter_photons}),
-    ]
+jsons = {
+        '2016': "Cert_271036-284044_13TeV_ReReco_07Aug2017_Collisions16_JSON.txt",
+        '2017': "Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt",
+        '2018': "Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt"
+}
 
-    mc_selectors = [
-        collectionMerger(input=["GenPart"],output="GenPart", selector={"GenPart" : filter_genpart}),
-        collectionMerger(input=["GenJet"],output="GenJet", selector={"GenJet" : lambda x : x.pt>20}),
-        collectionMerger(input=["GenJetAK8"],output="GenJetAK8", selector={"GenJetAK8" : lambda x : x.pt>20})
-    ]
+def read_options():
+    # Loop over input arguments
+    options = {}
+    prefixes = ['dataset', 'ismc', 'year','nofilter','test','file']
+    for argument in sys.argv:
+        for prefix in prefixes:
+            if argument.startswith(prefix):
+                value = argument.split('=')[-1]
+                options[prefix] = value
+    for p in prefixes:
+        if p not in options.keys():
+            options[p] = ''
 
-if options['ismc']:
-    if options['year'] == '2016':
-        modules = trigger_selector + [
-            jetmetUncertainties2016(),
-            jetmetUncertainties2016AK8Puppi()
-            ] + common_modules + [
-            puAutoWeight_2016(),
-            PrefCorr(jetroot="L1prefiring_jetpt_2016BtoH.root",
-                     jetmapname="L1prefiring_jetpt_2016BtoH",
-                     photonroot="L1prefiring_photonpt_2016BtoH.root",
-                     photonmapname="L1prefiring_photonpt_2016BtoH"),
-            ] + selectors + mc_selectors
-    if options['year'] == '2017':
-        modules = trigger_selector + [
-            jetmetUncertainties2017(),
-            jetmetUncertainties2017AK8Puppi()
-            ] + common_modules + [
-            puAutoWeight_2017(),
-            PrefCorr(jetroot="L1prefiring_jetpt_2017BtoF.root",
-                     jetmapname="L1prefiring_jetpt_2017BtoF",
-                     photonroot="L1prefiring_photonpt_2017BtoF.root",
-                     photonmapname="L1prefiring_photonpt_2017BtoF"),
-            ] + selectors + mc_selectors
-    elif options['year'] == '2018':
-        modules = trigger_selector + [
-            jetmetUncertainties2018(),
-            jetmetUncertainties2018AK8Puppi()
-            ] + common_modules + [
-                puAutoWeight_2018()
-            ] + selectors + mc_selectors
+    options['ismc'] = options['ismc'].lower() == "true"
+    options['nofilter'] = options['nofilter'].lower() == "true"
+    options['test'] = options['test'].lower() == "true"
 
-    p = PostProcessor(
-        outputDir=".",
-        inputFiles=files,
-        outputbranchsel=branchsel,
-        modules=modules,
-        provenance=True,
-        maxEntries=maxEntries,
-        fwkJobReport=True)
-else:
-    if options['year'] == '2016':
-        json = "Cert_271036-284044_13TeV_ReReco_07Aug2017_Collisions16_JSON.txt"
-    elif options['year'] == '2017':
-        json = "Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt"
-    elif options['year'] == '2018':
-        json = "Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt"
-    modules = trigger_selector + common_modules + selectors
-    p=PostProcessor(outputDir=".",
-        inputFiles=files,
-        outputbranchsel=branchsel,
-        modules=modules,
-        provenance=True,
-        fwkJobReport=True,
-        maxEntries=maxEntries,
-        jsonInput=json)
-p.run()
+    return options
 
-addDatasetTag()
+def main():
+    options = read_options()
 
-print "DONE"
-# os.system("ls -lR")
+    if options['test']:
+        files = [options['file']]
+        maxEntries = 1000
+    else:
+        files = inputFiles()
+        maxEntries = 0
+    branchsel = "keep_and_drop_monojet.txt"
+
+    if options['nofilter']:
+        common_modules = []
+        selectors = []
+        mc_selectors = []
+        trigger_selector = []
+    else:
+        triggerfile = 'triggers_nano_v5.txt'
+        trigger_selector = [triggerSelector(triggerfile)]
+        common_modules = [monojetPost()]
+        selectors = [
+            collectionMerger(input=["Jet"],output="Jet", selector={"Jet" : lambda x : jetptcut(x,19.9)}),
+            collectionMerger(input=["FatJet"],output="FatJet", selector={"FatJet" : lambda x : jetptcut(x,75.0)}),
+            collectionMerger(input=["Muon"],output="Muon", selector={"Muon" : filter_muons}),
+            collectionMerger(input=["Electron"],output="Electron", selector={"Electron" : filter_electrons}),
+            collectionMerger(input=["Photon"],output="Photon", selector={"Photon" : filter_photons}),
+        ]
+
+        mc_selectors = [
+            collectionMerger(input=["GenPart"],output="GenPart", selector={"GenPart" : filter_genpart}),
+            collectionMerger(input=["GenJet"],output="GenJet", selector={"GenJet" : lambda x : x.pt>20}),
+            collectionMerger(input=["GenJetAK8"],output="GenJetAK8", selector={"GenJetAK8" : lambda x : x.pt>20})
+        ]
+
+    if options['ismc']:
+        jme_modules = []
+        for jet_type in ['AK4PFchs', 'AK8PFPuppi']:
+            jme_modules.append(
+                               createJMECorrector(
+                                                  isMC=True,
+                                                  dataYear=options['year'],
+                                                  jesUncert="Total",
+                                                  redojec=options['year']=='2018',
+                                                  jetType=jet_type
+                                                  )()
+                                )
+        if options['year'] == '2016':
+            pu_modules = [puAutoWeight_2016()]
+            pref_modules = [
+                            PrefCorr(
+                                    jetroot="L1prefiring_jetpt_2016BtoH.root",
+                                    jetmapname="L1prefiring_jetpt_2016BtoH",
+                                    photonroot="L1prefiring_photonpt_2016BtoH.root",
+                                    photonmapname="L1prefiring_photonpt_2016BtoH")
+                            ]
+        if options['year'] == '2017':
+            pu_modules = [ puAutoWeight_2017() ]
+            pref_modules = [
+                            PrefCorr(
+                                    jetroot="L1prefiring_jetpt_2017BtoF.root",
+                                    jetmapname="L1prefiring_jetpt_2017BtoF",
+                                    photonroot="L1prefiring_photonpt_2017BtoF.root",
+                                    photonmapname="L1prefiring_photonpt_2017BtoF"
+                                    )
+                            ]
+        elif options['year'] == '2018':
+            pu_modules = [ puAutoWeight_2018() ]
+            pref_modules = []
+
+        modules = trigger_selector + jme_modules + common_modules + pu_modules + pref_modules+ selectors + mc_selectors
+        p = PostProcessor(
+            outputDir=".",
+            inputFiles=files,
+            outputbranchsel=branchsel,
+            modules=modules,
+            provenance=True,
+            maxEntries=maxEntries,
+            fwkJobReport=True)
+    else:
+        jme_modules = []
+        if options['year']=='2018':
+            run_period = extract_period(options['dataset'])
+            for jet_type in ['AK4PFchs', 'AK8PFPuppi']:
+                jme_modules.append(
+                                createJMECorrector(
+                                                    isMC=False,
+                                                    dataYear=options['year'],
+                                                    jesUncert="Total",
+                                                    redojec=True,
+                                                    runPeriod=run_period,
+                                                    jetType=jet_type
+                                                    )()
+                                    )
+
+        modules = trigger_selector + jme_modules + common_modules + selectors
+        p=PostProcessor(outputDir=".",
+            inputFiles=files,
+            outputbranchsel=branchsel,
+            modules=modules,
+            provenance=True,
+            fwkJobReport=True,
+            maxEntries=maxEntries,
+            jsonInput=jsons[options['year']])
+    p.run()
+
+    addDatasetTag()
+
+    print "DONE"
+
+if __name__ == "__main__":
+    main()
 
