@@ -81,6 +81,8 @@ keep Photon_electronVeto
 keep Photon_pf*
 keep Photon_sieie
 keep Photon_vidNestedWPBitmap
+keep Photon_pfRelIso03_all
+keep Photon_pfRelIso03_chg
 drop Photon_cutBasedV1Bitmap
 
 keep nJet
@@ -94,6 +96,7 @@ drop Jet_cleanmask
 drop Jet_bReg*
 drop Jet_btagCMVA
 drop Jet_genJetIdx
+drop Jet_mass*
 
 keep fixedGridRho*
 
@@ -135,9 +138,6 @@ keep Prefire*
 
 keep LHE_*
 keep *LHE*Weight*
-
-keep nTrigObj
-keep TrigObj_*
 
 keep event
 keep run
