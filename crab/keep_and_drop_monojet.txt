@@ -120,7 +120,7 @@ drop FatJet_deepTag_TvsQCD
 
 keep PV_npvs*
 
-keep MET_*
+keep MET*
 keep TkMET_*
 keep PuppiMET_*
 keep CaloMET_*
