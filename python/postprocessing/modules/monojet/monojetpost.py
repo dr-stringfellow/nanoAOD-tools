@@ -11,7 +11,7 @@ met_pt_names = ['pt','pt_jesTotalDown','pt_jesTotalUp','pt_jerDown','pt_jerUp','
 
 def variation_safe_pt_cut(obj, cut):
     for key in dir(obj):
-        if not obj.startswith('pt_'):
+        if not key.startswith('pt_'):
             continue
         if getattr(obj, key) > cut:
             return True

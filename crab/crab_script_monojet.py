@@ -44,7 +44,7 @@ def filter_muons(muon):
     return (muon.pt>9.9) and (muon.looseId) and (muon.pfRelIso04_all < 0.4)
 
 def met_branch_name(year, jet_type):
-    if (year == '2019') and (jet_type=='AK4PFchs'):
+    if (year == '2017') and (jet_type=='AK4PFchs'):
         return "METFixEE2017"
     else:
         return "MET"
