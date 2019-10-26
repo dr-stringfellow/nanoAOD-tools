@@ -8,7 +8,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import *
 from PhysicsTools.NanoAODTools.postprocessing.framework.crabhelper import inputFiles,runsAndLumis, addDatasetTag
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import *
-from PhysicsTools.NanoAODTools.postprocessing.modules.monojet.monojetpost import monojetPost, jet_pt_names
+from PhysicsTools.NanoAODTools.postprocessing.modules.monojet.monojetpost import monojetPost, variation_safe_pt_cut
 from PhysicsTools.NanoAODTools.postprocessing.modules.monojet.triggerselector import triggerSelector
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetUncertainties import *
@@ -17,12 +17,6 @@ from PhysicsTools.NanoAODTools.postprocessing.modules.common.collectionMerger im
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import puAutoWeight_2016, puAutoWeight_2017, puAutoWeight_2018
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2 import createJMECorrector
 
-def jetptcut(jet, value):
-    for name in jet_pt_names:
-        if hasattr(jet, name):
-            if getattr(jet, name) > value:
-                return True
-    return False
 
 def filter_electrons(electron):
     return (electron.pt>9.9) and (electron.cutBased > 0)
@@ -95,8 +89,8 @@ def main():
         trigger_selector = [triggerSelector(triggerfile)]
         common_modules = [monojetPost()]
         selectors = [
-            collectionMerger(input=["Jet"],output="Jet", selector={"Jet" : lambda x : jetptcut(x,19.9)}),
-            collectionMerger(input=["FatJet"],output="FatJet", selector={"FatJet" : lambda x : jetptcut(x,75.0)}),
+            collectionMerger(input=["Jet"],output="Jet", selector={"Jet" : lambda x : variation_safe_pt_cut(x,19.9)}),
+            collectionMerger(input=["FatJet"],output="FatJet", selector={"FatJet" : lambda x : variation_safe_pt_cut(x,150.0)}),
             collectionMerger(input=["Muon"],output="Muon", selector={"Muon" : filter_muons}),
             collectionMerger(input=["Electron"],output="Electron", selector={"Electron" : filter_electrons}),
             collectionMerger(input=["Photon"],output="Photon", selector={"Photon" : filter_photons}),
