@@ -43,6 +43,12 @@ def extract_period(dataset):
 def filter_muons(muon):
     return (muon.pt>9.9) and (muon.looseId) and (muon.pfRelIso04_all < 0.4)
 
+def met_branch_name(year, jet_type):
+    if (year == '2019') and (jet_type=='AK4PFchs'):
+        return "METFixEE2017"
+    else:
+        return "MET"
+
 jsons = {
         '2016': "Cert_271036-284044_13TeV_ReReco_07Aug2017_Collisions16_JSON.txt",
         '2017': "Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt",
@@ -111,7 +117,8 @@ def main():
                                                   dataYear=options['year'],
                                                   jesUncert="Total",
                                                   redojec=options['year']=='2018',
-                                                  jetType=jet_type
+                                                  jetType=jet_type,
+                                                  metBranchName=met_branch_name(options['year'], jet_type)
                                                   )()
                                 )
         if options['year'] == '2016':
@@ -148,7 +155,7 @@ def main():
             fwkJobReport=True)
     else:
         jme_modules = []
-        if options['year']=='2018':
+        if options['year']=='2018' or options['year']=='2017':
             run_period = extract_period(options['dataset'])
             for jet_type in ['AK4PFchs', 'AK8PFPuppi']:
                 jme_modules.append(
@@ -158,7 +165,8 @@ def main():
                                                     jesUncert="Total",
                                                     redojec=True,
                                                     runPeriod=run_period,
-                                                    jetType=jet_type
+                                                    jetType=jet_type,
+                                                    metBranchName=met_branch_name(options['year'], jet_type)
                                                     )()
                                     )
 
