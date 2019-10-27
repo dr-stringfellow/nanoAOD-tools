@@ -29,7 +29,6 @@ met_pt_names = [
 
 def variation_safe_pt_cut(obj, cut):
     for key in set(jet_pt_names + met_pt_names):
-        print obj, key, hasattr(obj, key)
         if not hasattr(obj, key):
             continue
         val = getattr(obj, key)
@@ -95,7 +94,6 @@ class monojetPost(Module):
 
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
-
         jets = Collection(event,"Jet")
         # Check for jets
         fatjets = Collection(event,"FatJet")
