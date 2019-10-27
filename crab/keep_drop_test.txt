@@ -1,0 +1,6 @@
+drop *
+
+keep Jet_pt*
+keep Jet2_pt*
+
+drop *Down*
