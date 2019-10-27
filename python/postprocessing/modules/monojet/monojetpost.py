@@ -5,15 +5,35 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collect
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 import os
 
-jet_pt_names = ['pt','pt_jesTotalDown','pt_jesTotalUp','pt_jerDown','pt_jerUp','pt_nom','pt_raw']
-met_pt_names = ['pt','pt_jesTotalDown','pt_jesTotalUp','pt_jerDown','pt_jerUp','pt_nom','pt_unclustEnUp','pt_unclustEnDown']
+jet_pt_names = [
+                'pt',
+                'pt_jesTotalDown',
+                'pt_jesTotalUp',
+                'pt_jerDown',
+                'pt_jerUp',
+                'pt_nom',
+                'pt_raw'
+                ]
+met_pt_names = [
+                'pt',
+                'pt_nom',
+                'pt_jer',
+                'pt_jesTotalDown',
+                'pt_jesTotalUp',
+                'pt_jerDown',
+                'pt_jerUp',
+                'pt_unclustEnUp',
+                'pt_unclustEnDown'
+                ]
 
 
 def variation_safe_pt_cut(obj, cut):
-    for key in dir(obj):
-        if not key.startswith('pt_'):
+    for key in set(jet_pt_names + met_pt_names):
+        print obj, key, hasattr(obj, key)
+        if not hasattr(obj, key):
             continue
-        if getattr(obj, key) > cut:
+        val = getattr(obj, key)
+        if  val > cut:
             return True
     return False
 
@@ -38,11 +58,13 @@ class monojetPost(Module):
         return False
 
     def has_met(self, event):
-        for key in dir(event):
-            if not (key.startswith("MET") and 'pt' in key):
-                continue
-            if getattr(event, key) > 75:
-                return True
+        for met in ['MET', 'METFixEE2017']:
+            for key in set(jet_pt_names + met_pt_names):
+                full_key = met+"_"+key
+                if not hasattr(event, full_key):
+                    continue
+                if  getattr(event, full_key)> 75:
+                    return True
         return False
 
     def has_muons(self, event):
