@@ -136,6 +136,7 @@ keep Pileup_*
 keep puWeight*
 keep Prefire*
 
+keep nLHE*
 keep LHE_*
 keep *LHE*Weight*
 
