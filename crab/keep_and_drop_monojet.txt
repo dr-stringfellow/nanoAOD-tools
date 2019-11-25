@@ -60,12 +60,7 @@ keep nTau
 keep Tau_pt
 keep Tau_eta
 keep Tau_phi
-keep Tau_idDecayMode
-keep Tau_idDecayModeNewDMs
-keep Tau_idMVAnewDM2017v2
-keep Tau_idMVAoldDM2017v2
-keep Tau_idAntiEle
-keep Tau_idAntiMu
+keep Tau_id*
 
 keep nPhoton
 keep Photon_pt
