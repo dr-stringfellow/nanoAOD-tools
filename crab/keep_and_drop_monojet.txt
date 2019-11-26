@@ -132,7 +132,7 @@ keep puWeight*
 keep Prefire*
 
 keep nLHE*
-keep LHE_*
+keep LHE*
 keep *LHE*Weight*
 
 keep event
