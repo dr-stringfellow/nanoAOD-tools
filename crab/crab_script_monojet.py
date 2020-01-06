@@ -95,11 +95,13 @@ def main():
         trigger_selector = [triggerSelector(triggerfile)]
         common_modules = [monojetPost()]
         selectors = [
-            collectionMerger(input=["Jet"],output="Jet", selector={"Jet" : lambda x : variation_safe_pt_cut(x,19.9)}),
-            collectionMerger(input=["FatJet"],output="FatJet", selector={"FatJet" : lambda x : variation_safe_pt_cut(x,150.0)}),
-            collectionMerger(input=["Muon"],output="Muon", selector={"Muon" : filter_muons}),
-            collectionMerger(input=["Electron"],output="Electron", selector={"Electron" : filter_electrons}),
-            collectionMerger(input=["Photon"],output="Photon", selector={"Photon" : filter_photons}),
+            # collectionMerger(input=["Jet"],output="Jet", selector={"Jet" : lambda x : variation_safe_pt_cut(x,19.9)}),
+            # collectionMerger(input=["FatJet"],output="FatJet", selector={"FatJet" : lambda x : variation_safe_pt_cut(x,150.0)}),
+            # collectionMerger(input=["Muon"],output="Muon", selector={"Muon" : filter_muons}),
+            # collectionMerger(input=["Electron"],output="Electron", selector={"Electron" : filter_electrons}),
+            # collectionMerger(input=["Photon"],output="Photon", selector={"Photon" : filter_photons}),
+            collectionMerger(input=["Jet"],output="Jet",sortkey=lambda x: x.pt_nom),
+            collectionMerger(input=["FatJet"],output="FatJet",sortkey=lambda x: x.pt_nom),
         ]
 
         mc_selectors = [
