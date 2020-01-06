@@ -69,6 +69,9 @@ def short_name(dataset):
     m=re.match(r".*(ext\d+).*",conditions);
     if m:
         name = name + "_" + m.groups()[0]
+    m=re.match(r".*(ver\d+).*",conditions);
+    if m:
+        name = name + "_" + m.groups()[0]
     if 'new_pmx' in conditions:
         name = name + '_new_pmx'
     if 'RunIISummer16' in conditions:
