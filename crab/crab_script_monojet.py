@@ -94,14 +94,19 @@ def main():
         triggerfile = 'triggers_nano_v5.txt'
         trigger_selector = [triggerSelector(triggerfile)]
         common_modules = [monojetPost()]
+
+        if options['year'] == '2016' and not options['ismc']:
+            jetsorter = lambda x: x.pt
+        else:
+            jetsorter = lambda x: x.pt_nom
         selectors = [
             # collectionMerger(input=["Jet"],output="Jet", selector={"Jet" : lambda x : variation_safe_pt_cut(x,19.9)}),
             # collectionMerger(input=["FatJet"],output="FatJet", selector={"FatJet" : lambda x : variation_safe_pt_cut(x,150.0)}),
             # collectionMerger(input=["Muon"],output="Muon", selector={"Muon" : filter_muons}),
             # collectionMerger(input=["Electron"],output="Electron", selector={"Electron" : filter_electrons}),
             # collectionMerger(input=["Photon"],output="Photon", selector={"Photon" : filter_photons}),
-            collectionMerger(input=["Jet"],output="Jet",sortkey=lambda x: x.pt_nom),
-            collectionMerger(input=["FatJet"],output="FatJet",sortkey=lambda x: x.pt_nom),
+            collectionMerger(input=["Jet"],output="Jet",sortkey=jetsorter),
+            collectionMerger(input=["FatJet"],output="FatJet",sortkey=jetsorter),
         ]
 
         mc_selectors = [
