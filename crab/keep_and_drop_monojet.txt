@@ -139,7 +139,7 @@ keep event
 keep run
 keep luminosityBlock
 
-keep HLT_Ele27_WPTight
+keep HLT_Ele27_WPTight_Gsf
 keep HLT_Ele32_WPTight_Gsf
 keep HLT_Ele35_WPTight_Gsf
 keep HLT_Ele35_WPTight_Gsf_L1EGMT

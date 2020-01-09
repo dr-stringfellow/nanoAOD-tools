@@ -1,4 +1,4 @@
-HLT_Ele27_WPTight
+HLT_Ele27_WPTight_Gsf
 HLT_Ele32_WPTight_Gsf
 HLT_Ele35_WPTight_Gsf
 HLT_Ele35_WPTight_Gsf_L1EGMT
@@ -66,7 +66,6 @@ HLT_Photon150
 HLT_Photon175
 HLT_Photon200
 HLT_Photon165_HE10
-HLT_Photon175
 HLT_EcalHT800
 
 HLT_DiJet110_35_Mjj650_PFMET110
