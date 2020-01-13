@@ -1,0 +1,24 @@
+drop *
+
+keep nGenPart
+keep GenPart_*
+keep GenDressed*
+keep GenMET_*
+
+keep nGenJet
+keep GenJet_*
+
+keep nGenJetAK8
+keep GenJetAK8_*
+
+keep genWeight
+keep Generator_*
+keep Pileup_*
+
+keep nLHE*
+keep LHE*
+keep *LHE*Weight*
+
+keep event
+keep run
+keep luminosityBlock
