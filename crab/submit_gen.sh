@@ -1,4 +1,4 @@
-TAG=$(grep ^tag crab_cfg.py | sed "s|.*= *||g;s|\"||g")
+TAG=$(grep ^tag crab_cfg_gen.py | sed "s|.*= *||g;s|\"||g")
 SUBMITFILE="./wdir/gen/${TAG}/submitted.txt"
 mkdir -p $(dirname $SUBMITFILE)
 submit_dataset_list(){
@@ -17,12 +17,11 @@ submit_dataset_list(){
             # echo "Dataset was already submitted. Skipping $DS."
             continue
         fi
-        crab submit crab_cfg.py Data.inputDataset=${DS}
+        crab submit crab_cfg_gen.py Data.inputDataset=${DS}
         code=$?
         if [ $code -eq 0 ]; then
             echo $DS >> $SUBMITFILE
         fi
-        break
     done < $LIST
 }
 
