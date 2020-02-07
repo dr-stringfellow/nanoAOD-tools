@@ -125,6 +125,7 @@ def main():
                                                   jesUncert="Total",
                                                   redojec=options['year']=='2018',
                                                   jetType=jet_type,
+                                                  applyHEMFix=options['year']=='2018',
                                                   metBranchName=met_branch_name(options['year'], jet_type)
                                                   )()
                                 )
@@ -170,7 +171,7 @@ def main():
                                                     isMC=False,
                                                     dataYear=options['year'],
                                                     jesUncert="Total",
-                                                    redojec=True,
+                                                    redojec=options['year']=='2018',
                                                     runPeriod=run_period,
                                                     jetType=jet_type,
                                                     metBranchName=met_branch_name(options['year'], jet_type)
