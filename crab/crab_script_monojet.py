@@ -135,7 +135,16 @@ def main():
                                     jetroot="L1prefiring_jetpt_2016BtoH.root",
                                     jetmapname="L1prefiring_jetpt_2016BtoH",
                                     photonroot="L1prefiring_photonpt_2016BtoH.root",
-                                    photonmapname="L1prefiring_photonpt_2016BtoH")
+                                    photonmapname="L1prefiring_photonpt_2016BtoH",
+                                    branchnames=["PrefireWeight","PrefireWeight_Up", "PrefireWeight_Down"]
+                                    ),
+                            PrefCorr(
+                                    jetroot="L1prefiring_jetempt_2016BtoH.root",
+                                    jetmapname="L1prefiring_jetempt_2016BtoH",
+                                    photonroot="L1prefiring_photonpt_2016BtoH.root",
+                                    photonmapname="L1prefiring_photonpt_2016BtoH",
+                                    branchnames=["PrefireWeight_jetem","PrefireWeight_jetem_Up", "PrefireWeight_jetem_Down"]
+                                    )
                             ]
         if options['year'] == '2017':
             pu_modules = [ puAutoWeight_2017() ]
@@ -144,7 +153,15 @@ def main():
                                     jetroot="L1prefiring_jetpt_2017BtoF.root",
                                     jetmapname="L1prefiring_jetpt_2017BtoF",
                                     photonroot="L1prefiring_photonpt_2017BtoF.root",
-                                    photonmapname="L1prefiring_photonpt_2017BtoF"
+                                    photonmapname="L1prefiring_photonpt_2017BtoF",
+                                    branchnames=["PrefireWeight","PrefireWeight_Up", "PrefireWeight_Down"]
+                                    ),
+                            PrefCorr(
+                                    jetroot="L1prefiring_jetempt_2017BtoF.root",
+                                    jetmapname="L1prefiring_jetempt_2017BtoF",
+                                    photonroot="L1prefiring_photonpt_2017BtoF.root",
+                                    photonmapname="L1prefiring_photonpt_2017BtoF",
+                                    branchnames=["PrefireWeight_jetem","PrefireWeight_jetem_Up", "PrefireWeight_jetem_Down"]
                                     )
                             ]
         elif options['year'] == '2018':
