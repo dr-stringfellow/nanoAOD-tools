@@ -106,12 +106,10 @@ drop FatJet_btagDDCvL
 drop FatJet_btagHbb
 drop FatJet_deepTagMD_H4qvsQCD
 drop FatJet_deepTagMD_HbbvsQCD
-drop FatJet_deepTagMD_TvsQCD
 drop FatJet_deepTagMD_ZHbbvsQCD
 drop FatJet_deepTagMD_bbvsLight
 drop FatJet_deepTagMD_ccvsLight
 drop FatJet_deepTag_H
-drop FatJet_deepTag_TvsQCD
 
 keep PV_npvs*
 
