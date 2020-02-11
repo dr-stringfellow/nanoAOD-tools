@@ -22,11 +22,12 @@ def filter_electrons(electron):
     return (electron.pt>9.9) and (electron.cutBased > 0)
 
 def filter_photons(photon):
+    good = False
     if hasattr(photon, 'cutBasedBitmap'):
-        return photon.cutBasedBitmap > 0
+        good |= photon.cutBasedBitmap > 0
     if hasattr(photon, 'cutBased17Bitmap'):
-        return photon.cutBased17Bitmap > 0
-    return False
+        good |= photon.cutBased17Bitmap > 0
+    return good
 
 def filter_genpart(genpart):
     good = False
@@ -100,19 +101,17 @@ def main():
         else:
             jetsorter = lambda x: x.pt_nom
         selectors = [
-            # collectionMerger(input=["Jet"],output="Jet", selector={"Jet" : lambda x : variation_safe_pt_cut(x,19.9)}),
-            # collectionMerger(input=["FatJet"],output="FatJet", selector={"FatJet" : lambda x : variation_safe_pt_cut(x,150.0)}),
+            collectionMerger(input=["Jet"],output="Jet",selector={"Jet" : lambda x : variation_safe_pt_cut(x,19.9)},sortkey=jetsorter),
+            collectionMerger(input=["FatJet"],output="FatJet", selector={"FatJet" : lambda x : variation_safe_pt_cut(x,200.0), sortkey=jetsorter),
             # collectionMerger(input=["Muon"],output="Muon", selector={"Muon" : filter_muons}),
             # collectionMerger(input=["Electron"],output="Electron", selector={"Electron" : filter_electrons}),
             # collectionMerger(input=["Photon"],output="Photon", selector={"Photon" : filter_photons}),
-            collectionMerger(input=["Jet"],output="Jet",sortkey=jetsorter),
-            collectionMerger(input=["FatJet"],output="FatJet",sortkey=jetsorter),
         ]
 
         mc_selectors = [
             collectionMerger(input=["GenPart"],output="GenPart", selector={"GenPart" : filter_genpart}),
             collectionMerger(input=["GenJet"],output="GenJet", selector={"GenJet" : lambda x : x.pt>20}),
-            collectionMerger(input=["GenJetAK8"],output="GenJetAK8", selector={"GenJetAK8" : lambda x : x.pt>20})
+            collectionMerger(input=["GenJetAK8"],output="GenJetAK8", selector={"GenJetAK8" : lambda x : x.pt>100})
         ]
 
     if options['ismc']:
