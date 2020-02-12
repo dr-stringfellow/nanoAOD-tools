@@ -102,7 +102,7 @@ def main():
             jetsorter = lambda x: x.pt_nom
         selectors = [
             collectionMerger(input=["Jet"],output="Jet",selector={"Jet" : lambda x : variation_safe_pt_cut(x,19.9)},sortkey=jetsorter),
-            collectionMerger(input=["FatJet"],output="FatJet", selector={"FatJet" : lambda x : variation_safe_pt_cut(x,200.0), sortkey=jetsorter),
+            collectionMerger(input=["FatJet"],output="FatJet", selector={"FatJet" : lambda x : variation_safe_pt_cut(x,200.0)}, sortkey=jetsorter),
             # collectionMerger(input=["Muon"],output="Muon", selector={"Muon" : filter_muons}),
             # collectionMerger(input=["Electron"],output="Electron", selector={"Electron" : filter_electrons}),
             # collectionMerger(input=["Photon"],output="Photon", selector={"Photon" : filter_photons}),
