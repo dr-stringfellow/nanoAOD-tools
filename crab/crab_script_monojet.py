@@ -31,7 +31,7 @@ def filter_photons(photon):
 def filter_genpart(genpart):
     good = False
     good |= genpart.status in [1,2,62]
-    good |= (abs(genpart.pdgId) in [11,12,13,14,15,16,22,23,24])
+    good |= (abs(genpart.pdgId) in [11,12,13,14,15,16,22,23,24,25])
     return good
 
 def extract_period(dataset):
@@ -179,7 +179,7 @@ def main():
             fwkJobReport=True)
     else:
         jme_modules = []
-        if options['year']=='2018' or options['year']=='2017':
+        if options['year']=='2017':
             run_period = extract_period(options['dataset'])
             for jet_type in ['AK4PFchs', 'AK8PFPuppi']:
                 jme_modules.append(
