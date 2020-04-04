@@ -61,6 +61,9 @@ keep Tau_pt
 keep Tau_eta
 keep Tau_phi
 keep Tau_id*
+keep Tau_genPartFlav
+
+keep IsoTrack*
 
 keep nPhoton
 keep Photon_pt
@@ -93,6 +96,7 @@ drop Jet_btagCMVA
 drop Jet_genJetIdx
 drop Jet_mass*
 
+keep SoftActivity*
 keep fixedGridRho*
 
 keep nCorrT1METJet
@@ -118,7 +122,6 @@ keep TkMET_*
 keep PuppiMET_*
 keep CaloMET_*
 keep PuppiMET_*
-drop *_sumEt
 
 keep Flag_*
 
