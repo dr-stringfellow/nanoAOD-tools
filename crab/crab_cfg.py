@@ -141,11 +141,11 @@ import socket
 host = socket.gethostname()
 if 'lxplus' in host:
     config.Site.storageSite = "T2_CH_CERN"
-    config.Data.outLFNDirBase = '/store/group/phys_exotica/monojet/{0}/nanopost/{1}/'.format(getUsernameFromSiteDB(),
+    config.Data.outLFNDirBase = '/store/group/phys_exotica/monojet/{0}/nanopost/{1}/'.format("aalbert",
                                                                           tag)
 elif 'lpc' in host:
     config.Site.storageSite = "T3_US_FNALLPC"
-    config.Data.outLFNDirBase = '/store/user/{0}/nanopost/{1}/'.format(getUsernameFromSiteDB(),
+    config.Data.outLFNDirBase = '/store/user/{0}/nanopost/{1}/'.format("aalbert",
                                                                           tag)
 else:
     raise RuntimeError("Cannot parse hostname: " + host)
