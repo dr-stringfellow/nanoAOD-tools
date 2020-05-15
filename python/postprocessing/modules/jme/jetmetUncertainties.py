@@ -423,6 +423,8 @@ class jetmetUncertaintiesProducer(Module):
                       met_px_jerDown = met_px_jerDown - (jet_pt_L1L2L3*jet_pt_jerDownVal  - jet_pt_L1)*jet_cosPhi 
                       met_py_jerDown = met_py_jerDown - (jet_pt_L1L2L3*jet_pt_jerDownVal  - jet_pt_L1)*jet_sinPhi 
                       for jesUncertainty in self.jesUncertainties:
+                          if jet_pt_L1L2L3 == jet_pt_L1:
+                              continue
                           met_px_jesUp[jesUncertainty]   = met_px_jesUp[jesUncertainty]   - (jet_pt_jesUpT1[jesUncertainty]   - jet_pt_L1)*jet_cosPhi
                           met_py_jesUp[jesUncertainty]   = met_py_jesUp[jesUncertainty]   - (jet_pt_jesUpT1[jesUncertainty]   - jet_pt_L1)*jet_sinPhi
                           met_px_jesDown[jesUncertainty] = met_px_jesDown[jesUncertainty] - (jet_pt_jesDownT1[jesUncertainty] - jet_pt_L1)*jet_cosPhi
