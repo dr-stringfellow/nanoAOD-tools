@@ -62,6 +62,7 @@ keep Tau_eta
 keep Tau_phi
 keep Tau_id*
 keep Tau_genPartFlav
+keep Tau_dz
 
 keep IsoTrack*
 
