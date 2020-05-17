@@ -87,7 +87,7 @@ def short_name(dataset):
 
     return name
 
-tag = "04Apr20"
+tag = "15May20"
 dataset = get_dataset()
 name = short_name(dataset)
 config = base_configuration()
@@ -145,7 +145,7 @@ if 'lxplus' in host:
                                                                           tag)
 elif 'lpc' in host:
     config.Site.storageSite = "T3_US_FNALLPC"
-    config.Data.outLFNDirBase = '/store/user/{0}/nanopost/{1}/'.format("aalbert",
+    config.Data.outLFNDirBase = '/store/user/{0}/nanopost/{1}/'.format("aakpinar",
                                                                           tag)
 else:
     raise RuntimeError("Cannot parse hostname: " + host)
