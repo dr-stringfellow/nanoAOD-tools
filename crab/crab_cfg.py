@@ -1,6 +1,5 @@
 
 from WMCore.Configuration import Configuration
-from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 
 import md5
 import sys
