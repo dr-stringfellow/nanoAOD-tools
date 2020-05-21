@@ -116,13 +116,15 @@ def main():
         ]
 
     if options['ismc']:
+        # List split JEC uncertainties to feed in to the JME module (total unc at the end)
+        jesUncert = "Absolute,Absolute_2016,BBEC1,BBEC1_2016,EC2,EC2_2016,FlavorQCD,HF,HF_2016,RelativeBal,RelativeSample_2016,Total"
         jme_modules = []
         for jet_type in ['AK4PFchs', 'AK8PFPuppi']:
             jme_modules.append(
                                createJMECorrector(
                                                   isMC=True,
                                                   dataYear=options['year'],
-                                                  jesUncert="Total",
+                                                  jesUncert=jesUncert,
                                                   redojec=options['year']=='2018',
                                                   jetType=jet_type,
                                                   metBranchName=met_branch_name(options['year'], jet_type)
