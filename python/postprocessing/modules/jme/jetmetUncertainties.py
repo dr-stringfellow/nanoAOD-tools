@@ -3,6 +3,7 @@ import math, os,re, tarfile, tempfile, shutil
 import numpy as np
 import itertools
 ROOT.PyConfig.IgnoreCommandLineOptions = True
+pjoin = os.path.join
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection, Object
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
@@ -55,19 +56,27 @@ class jetmetUncertaintiesProducer(Module):
 
         # read jet energy scale (JES) uncertainties
         # (downloaded from https://twiki.cern.ch/twiki/bin/view/CMS/JECDataMC )
+
         self.jesInputArchivePath = os.environ['CMSSW_BASE'] + "/src/PhysicsTools/NanoAODTools/data/jme/"
+
         # Text files are now tarred so must extract first into temporary directory (gets deleted during python memory management at script exit)
         self.jesArchive = tarfile.open(self.jesInputArchivePath+globalTag+".tgz", "r:gz") if not archive else tarfile.open(self.jesInputArchivePath+archive+".tgz", "r:gz")
         self.jesInputFilePath = tempfile.mkdtemp()
         self.jesArchive.extractall(self.jesInputFilePath)
-        
-        # to fully re-calculate type-1 MET the JEC that are currently applied are also needed. IS THAT EVEN CORRECT?
-
-
         if len(jesUncertainties) == 1 and jesUncertainties[0] == "Total":
             self.jesUncertaintyInputFileName = globalTag + "_Uncertainty_" + jetType + ".txt"
+        # If split JECs are requested, use the uncertainty input file with the regrouped uncertainties instead
         else:
-            self.jesUncertaintyInputFileName = globalTag + "_UncertaintySources_" + jetType + ".txt"
+            # self.jesUncertaintyInputFileName = globalTag + "_UncertaintySources_" + jetType + ".txt"
+            self.jesGroupedFilePath = os.environ['CMSSW_BASE'] + "/src/PhysicsTools/NanoAODTools/data/jme/regrouped/"
+            self.jesGroupedUncertaintyFileName = "Regrouped_" + globalTag + "_UncertaintySources_" + jetType + ".txt"
+            self.jesGroupedUncertaintyFilePath = pjoin(self.jesGroupedFilePath, self.jesGroupedUncertaintyFileName)
+            # Copy the uncertainty source file to the tmp directory
+            shutil.copy(self.jesGroupedUncertaintyFilePath, pjoin(self.jesInputFilePath, self.jesGroupedUncertaintyFileName))
+            self.jesUncertaintyInputFileName = self.jesGroupedUncertaintyFileName
+
+        # to fully re-calculate type-1 MET the JEC that are currently applied are also needed. IS THAT EVEN CORRECT?
+
 
         # read all uncertainty source names from the loaded file
         if jesUncertainties[0] == "All":
