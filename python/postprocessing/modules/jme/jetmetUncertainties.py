@@ -418,10 +418,10 @@ class jetmetUncertaintiesProducer(Module):
                     if not self.isData:
                       met_px_jer     = met_px_jer     - (jet_pt_L1L2L3*jet_pt_jerNomVal   - jet_pt_L1)*jet_cosPhi 
                       met_py_jer     = met_py_jer     - (jet_pt_L1L2L3*jet_pt_jerNomVal   - jet_pt_L1)*jet_sinPhi 
-                      met_px_jerUp   = met_px_jerUp   - (jet_pt_L1L2L3*jet_pt_jerUpVal    - jet_pt_L1)*jet_cosPhi 
-                      met_py_jerUp   = met_py_jerUp   - (jet_pt_L1L2L3*jet_pt_jerUpVal    - jet_pt_L1)*jet_sinPhi 
-                      met_px_jerDown = met_px_jerDown - (jet_pt_L1L2L3*jet_pt_jerDownVal  - jet_pt_L1)*jet_cosPhi 
-                      met_py_jerDown = met_py_jerDown - (jet_pt_L1L2L3*jet_pt_jerDownVal  - jet_pt_L1)*jet_sinPhi 
+                      met_px_jerUp   = met_px_jerUp   - (jet_pt_L1L2L3  - jet_pt_L1)*jet_pt_jerUpVal*jet_cosPhi 
+                      met_py_jerUp   = met_py_jerUp   - (jet_pt_L1L2L3  - jet_pt_L1)*jet_pt_jerUpVal*jet_sinPhi 
+                      met_px_jerDown = met_px_jerDown - (jet_pt_L1L2L3  - jet_pt_L1)*jet_pt_jerDownVal*jet_cosPhi 
+                      met_py_jerDown = met_py_jerDown - (jet_pt_L1L2L3  - jet_pt_L1)*jet_pt_jerDownVal*jet_sinPhi 
                       for jesUncertainty in self.jesUncertainties:
                           met_px_jesUp[jesUncertainty]   = met_px_jesUp[jesUncertainty]   - (jet_pt_jesUpT1[jesUncertainty]   - jet_pt_L1)*jet_cosPhi
                           met_py_jesUp[jesUncertainty]   = met_py_jesUp[jesUncertainty]   - (jet_pt_jesUpT1[jesUncertainty]   - jet_pt_L1)*jet_sinPhi
@@ -444,6 +444,8 @@ class jetmetUncertaintiesProducer(Module):
             met_py_nom += delta_y_rawJet - met_unclEE_y
             
             if not self.isData:
+              met_px_jer += delta_x_rawJet - met_unclEE_x
+              met_py_jer += delta_y_rawJet - met_unclEE_y
               met_px_jerUp += delta_x_rawJet - met_unclEE_x
               met_py_jerUp += delta_y_rawJet - met_unclEE_y
               met_px_jerDown += delta_x_rawJet - met_unclEE_x
