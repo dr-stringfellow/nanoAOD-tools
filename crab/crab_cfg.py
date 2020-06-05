@@ -1,6 +1,6 @@
 
 from WMCore.Configuration import Configuration
-from CRABClient.UserUtilities import config, getUsernameFromSiteDB
+from CRABClient.UserUtilities import config
 
 import md5
 import sys
@@ -141,12 +141,10 @@ import socket
 host = socket.gethostname()
 if 'lxplus' in host:
     config.Site.storageSite = "T2_CH_CERN"
-    config.Data.outLFNDirBase = '/store/group/phys_exotica/monojet/{0}/nanopost/{1}/'.format(getUsernameFromSiteDB(),
-                                                                          tag)
+    config.Data.outLFNDirBase = '/store/group/phys_exotica/monojet/aalbert/nanopost/{1}/'.format(getUsernameFromSiteDB(),tag)
 elif 'lpc' in host:
     config.Site.storageSite = "T3_US_FNALLPC"
-    config.Data.outLFNDirBase = '/store/user/{0}/nanopost/{1}/'.format(getUsernameFromSiteDB(),
-                                                                          tag)
+    config.Data.outLFNDirBase = '/store/user/aalbert/nanopost/{0}/'.format(tag)
 else:
     raise RuntimeError("Cannot parse hostname: " + host)
 
