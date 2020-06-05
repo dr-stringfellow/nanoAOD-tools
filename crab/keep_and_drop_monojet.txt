@@ -29,6 +29,7 @@ keep Muon_dz
 keep Muon_dzErr
 keep Muon_is*
 keep Muon_ptErr
+keep Muon_genPartFlav
 
 keep nElectron
 keep Electron_pt
@@ -53,6 +54,7 @@ keep Electron_vidNestedWPBitmap
 keep Electron_convVeto
 keep Electron_lostHits
 keep Electron_seedGain
+keep Electron_genPartFlav
 
 drop Electron_cutBased_HEEP
 
@@ -83,6 +85,7 @@ keep Photon_sieie
 keep Photon_vidNestedWPBitmap
 keep Photon_pfRelIso03_all
 keep Photon_pfRelIso03_chg
+keep Photon_genPartFlav
 drop Photon_cutBasedV1Bitmap
 
 keep nJet
