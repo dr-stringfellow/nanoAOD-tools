@@ -25,4 +25,4 @@ submit_dataset_list(){
     done < $LIST
 }
 
-submit_dataset_list "datasets_znunu_2017.txt"
+submit_dataset_list "datasets_wlnu_2017.txt"
