@@ -8,3 +8,4 @@ build
 *.d
 *.so
 *.pcm
+nanoaod_for_test/
