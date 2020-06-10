@@ -25,4 +25,4 @@ submit_dataset_list(){
     done < $LIST
 }
 
-submit_dataset_list "datasets_zw_2018.txt"
+submit_dataset_list "datasets_forSplitJES_2017.txt"
