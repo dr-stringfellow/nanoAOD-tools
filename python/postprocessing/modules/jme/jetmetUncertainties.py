@@ -335,8 +335,12 @@ class jetmetUncertaintiesProducer(Module):
             # evaluate JER scale factors and uncertainties
             # (cf. https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution and https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyResolution )
             if not self.isData:
-              ( jet_pt_jerNomVal, jet_pt_jerUpVal, jet_pt_jerDownVal ) = self.jetSmearer.getSmearValsPt(jet, genJet, rho)
+              # Get the smearing factors for T1 MET correction
+              ( jet_pt_jerNomVal_T1, jet_pt_jerUpVal_T1, jet_pt_jerDownVal_T1 ) = self.jetSmearer.getSmearValsPt(jet, genJet, rho)
+              
+              # Get the smearing factors for T1Smear MET correction
               ( jet_pt_jerNomVal_T1Smear, jet_pt_jerUpVal_T1Smear, jet_pt_jerDownVal_T1Smear) = self.jetSmearer.getSmearValsPt(jet, genJet, rho, t1smear=True)
+              ( jet_pt_jerNomVal, jet_pt_jerUpVal, jet_pt_jerDownVal ) = ( jet_pt_jerNomVal_T1Smear, jet_pt_jerUpVal_T1Smear, jet_pt_jerDownVal_T1Smear )
             else:
               # if you want to do something with JER in data, please add it here.
               ( jet_pt_jerNomVal, jet_pt_jerUpVal, jet_pt_jerDownVal ) = (1,1,1)
@@ -432,10 +436,10 @@ class jetmetUncertaintiesProducer(Module):
                       met_T1Smear_px     = met_T1Smear_px     - (jet_pt_L1L2L3   - jet_pt_L1)*jet_pt_jerNomVal_T1Smear*jet_cosPhi 
                       met_T1Smear_py     = met_T1Smear_py     - (jet_pt_L1L2L3   - jet_pt_L1)*jet_pt_jerNomVal_T1Smear*jet_sinPhi 
                       # Calculate JER uncertainties on unsmeared MET
-                      met_T1_px_jerUp   = met_T1_px_jerUp   - (jet_pt_L1L2L3*jet_pt_jerUpVal    - jet_pt_L1)*jet_cosPhi 
-                      met_T1_py_jerUp   = met_T1_py_jerUp   - (jet_pt_L1L2L3*jet_pt_jerUpVal    - jet_pt_L1)*jet_sinPhi 
-                      met_T1_px_jerDown = met_T1_px_jerDown - (jet_pt_L1L2L3*jet_pt_jerDownVal  - jet_pt_L1)*jet_cosPhi 
-                      met_T1_py_jerDown = met_T1_py_jerDown - (jet_pt_L1L2L3*jet_pt_jerDownVal  - jet_pt_L1)*jet_sinPhi 
+                      met_T1_px_jerUp   = met_T1_px_jerUp   - (jet_pt_L1L2L3*jet_pt_jerUpVal_T1    - jet_pt_L1)*jet_cosPhi 
+                      met_T1_py_jerUp   = met_T1_py_jerUp   - (jet_pt_L1L2L3*jet_pt_jerUpVal_T1    - jet_pt_L1)*jet_sinPhi 
+                      met_T1_px_jerDown = met_T1_px_jerDown - (jet_pt_L1L2L3*jet_pt_jerDownVal_T1  - jet_pt_L1)*jet_cosPhi 
+                      met_T1_py_jerDown = met_T1_py_jerDown - (jet_pt_L1L2L3*jet_pt_jerDownVal_T1  - jet_pt_L1)*jet_sinPhi 
                       # Calculate JER uncertainties on smeared MET
                       met_T1Smear_px_jerUp   = met_T1Smear_px_jerUp   - (jet_pt_L1L2L3*jet_pt_jerUpVal_T1Smear    - jet_pt_L1*jet_pt_jerNomVal_T1Smear)*jet_cosPhi 
                       met_T1Smear_py_jerUp   = met_T1Smear_py_jerUp   - (jet_pt_L1L2L3*jet_pt_jerUpVal_T1Smear    - jet_pt_L1*jet_pt_jerNomVal_T1Smear)*jet_sinPhi 
