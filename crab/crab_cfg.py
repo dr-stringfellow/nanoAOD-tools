@@ -1,6 +1,5 @@
 
 from WMCore.Configuration import Configuration
-from CRABClient.UserUtilities import config
 
 import md5
 import sys
@@ -29,10 +28,10 @@ def base_configuration():
     config.JobType.scriptExe = 'crab_script.sh'
     config.JobType.inputFiles = ['../scripts/haddnano.py'] #hadd nano will not be needed once nano tools are in cmssw
     config.JobType.sendPythonFolder	 = True
-    config.JobType.maxJobRuntimeMin	 = 1800
+    config.JobType.maxJobRuntimeMin	 = 2400
     config.section_("Data")
     config.Data.inputDBS = 'global'
-    config.Data.splitting = 'FileBased'
+    config.Data.splitting = 'FileBased'g
     config.Data.unitsPerJob = 1
     # config.Data.totalUnits = 10
 
@@ -117,6 +116,10 @@ config.JobType.inputFiles.append(crab_script)
 config.JobType.inputFiles.append('keep_and_drop_monojet.txt')
 config.JobType.inputFiles.append('triggers_nano_v5.txt')
 
+# Request more memory for WJets jobs
+if 'WJets' in dataset:
+    config.JobType.maxMemoryMB = 4000
+
 # Pass the dataset name as an argument so that
 # the script can write it into the output files.
 config.JobType.scriptArgs = ["dataset={}".format(name),
@@ -141,10 +144,12 @@ import socket
 host = socket.gethostname()
 if 'lxplus' in host:
     config.Site.storageSite = "T2_CH_CERN"
-    config.Data.outLFNDirBase = '/store/group/phys_exotica/monojet/aalbert/nanopost/{1}/'.format(getUsernameFromSiteDB(),tag)
+    config.Data.outLFNDirBase = '/store/group/phys_exotica/monojet/{0}/nanopost/{1}/'.format("aalbert",
+                                                                          tag)
 elif 'lpc' in host:
     config.Site.storageSite = "T3_US_FNALLPC"
-    config.Data.outLFNDirBase = '/store/user/aalbert/nanopost/{0}/'.format(tag)
+    config.Data.outLFNDirBase = '/store/user/{0}/nanopost/{1}/'.format("aakpinar",
+                                                                          tag)
 else:
     raise RuntimeError("Cannot parse hostname: " + host)
 
