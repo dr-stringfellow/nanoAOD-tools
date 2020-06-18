@@ -31,7 +31,7 @@ def base_configuration():
     config.JobType.maxJobRuntimeMin	 = 2400
     config.section_("Data")
     config.Data.inputDBS = 'global'
-    config.Data.splitting = 'FileBased'g
+    config.Data.splitting = 'FileBased'
     config.Data.unitsPerJob = 1
     # config.Data.totalUnits = 10
 
