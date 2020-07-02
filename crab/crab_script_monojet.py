@@ -122,7 +122,7 @@ def main():
                                createJMECorrector(
                                                   isMC=True,
                                                   dataYear=options['year'],
-                                                  jesUncert="All", # Get all JEC uncertainties
+                                                  jesUncert="Total",
                                                   redojec=options['year']=='2018',
                                                   jetType=jet_type,
                                                   metBranchName=met_branch_name(options['year'], jet_type)
