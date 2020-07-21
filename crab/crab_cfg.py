@@ -86,7 +86,7 @@ def short_name(dataset):
 
     return name
 
-tag = "23May20"
+tag = "21Jul20_MET_UL"
 dataset = get_dataset()
 name = short_name(dataset)
 config = base_configuration()
