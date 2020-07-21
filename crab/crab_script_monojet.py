@@ -96,10 +96,8 @@ def main():
         trigger_selector = [triggerSelector(triggerfile)]
         common_modules = [monojetPost()]
 
-        if options['year'] == '2016' and not options['ismc']:
-            jetsorter = lambda x: x.pt
-        else:
-            jetsorter = lambda x: x.pt_nom
+        jetsorter = lambda x: x.pt
+
         selectors = [
             # collectionMerger(input=["Jet"],output="Jet", selector={"Jet" : lambda x : variation_safe_pt_cut(x,19.9)}),
             # collectionMerger(input=["FatJet"],output="FatJet", selector={"FatJet" : lambda x : variation_safe_pt_cut(x,150.0)}),
