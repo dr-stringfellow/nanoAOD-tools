@@ -187,10 +187,12 @@ def main():
                                                     dataYear=options['year'],
                                                     jesUncert="Total",
                                                     redojec=True,
+                                                    runPeriod=run_period,
                                                     jetType=jet_type,
                                                     metBranchName=met_branch_name(options['year'], jet_type),
                                                     isUL=True
                                                     )()
+                )
     
         modules = trigger_selector + jme_modules + common_modules + selectors
         p=PostProcessor(outputDir=".",
