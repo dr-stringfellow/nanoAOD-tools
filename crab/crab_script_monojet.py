@@ -178,7 +178,20 @@ def main():
             fwkJobReport=True)
     else:
         jme_modules = []
-
+        if options['year']=='2018' or options['year']=='2017':
+            run_period = extract_period(options['dataset'])
+            for jet_type in ['AK4PFchs', 'AK8PFPuppi']:
+                jme_modules.append(
+                                createJMECorrector(
+                                                    isMC=False,
+                                                    dataYear=options['year'],
+                                                    jesUncert="Total",
+                                                    redojec=True,
+                                                    jetType=jet_type,
+                                                    metBranchName=met_branch_name(options['year'], jet_type),
+                                                    isUL=True
+                                                    )()
+    
         modules = trigger_selector + jme_modules + common_modules + selectors
         p=PostProcessor(outputDir=".",
             inputFiles=files,

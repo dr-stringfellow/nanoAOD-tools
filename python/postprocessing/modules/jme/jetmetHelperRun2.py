@@ -19,6 +19,11 @@ archiveTagsDATA = {'2016' : 'Summer16_07Aug2017_V11_DATA',
                    '2018' : 'Autumn18_V19_DATA'
                   }
 
+# JEC tag for UL data
+jecTagsDATA_UL = {
+    '2017E' : 'Summer19UL17_RunE_V5_DATA'
+}
+
 jecTagsDATA = { '2016B' : 'Summer16_07Aug2017BCD_V11_DATA', 
                 '2016C' : 'Summer16_07Aug2017BCD_V11_DATA', 
                 '2016D' : 'Summer16_07Aug2017BCD_V11_DATA', 
@@ -57,7 +62,7 @@ jmsValues = { '2016' : [1.00, 0.9906, 1.0094], #nominal, down, up
               '2018' : [0.997, 0.993, 1.001]
             }
 
-def createJMECorrector(isMC=True, dataYear=2016, runPeriod="B", jesUncert="Total", redojec=False, jetType = "AK4PFchs", noGroom=False, metBranchName="MET", applySmearing=True, isFastSim=False):
+def createJMECorrector(isMC=True, dataYear=2016, runPeriod="B", jesUncert="Total", redojec=False, jetType = "AK4PFchs", noGroom=False, metBranchName="MET", applySmearing=True, isFastSim=False, isUL=False):
     
     dataYear = str(dataYear)
 
@@ -66,7 +71,10 @@ def createJMECorrector(isMC=True, dataYear=2016, runPeriod="B", jesUncert="Total
     elif isMC and isFastSim:
         jecTag_ = jecTagsFastSim[dataYear]
     else:
-        jecTag_ = jecTagsDATA[dataYear + runPeriod]
+        if not isUL:
+            jecTag_ = jecTagsDATA[dataYear + runPeriod]
+        else:
+            jecTag_ = jecTagsDATA_UL[dataYear + runPeriod]
 
     jmeUncert_ = [x for x in jesUncert.split(",")]
 
