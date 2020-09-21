@@ -29,7 +29,7 @@ def base_configuration():
     config.JobType.scriptExe = 'crab_script.sh'
     config.JobType.inputFiles = ['../scripts/haddnano.py'] #hadd nano will not be needed once nano tools are in cmssw
     config.JobType.sendPythonFolder	 = True
-    config.JobType.maxJobRuntimeMin	 = 1800
+    config.JobType.maxJobRuntimeMin	 = 2400
     config.section_("Data")
     config.Data.inputDBS = 'global'
     config.Data.splitting = 'FileBased'
@@ -87,7 +87,7 @@ def short_name(dataset):
 
     return name
 
-tag = "18Sep20"
+tag = "21Sep20v7"
 dataset = get_dataset()
 name = short_name(dataset)
 config = base_configuration()
