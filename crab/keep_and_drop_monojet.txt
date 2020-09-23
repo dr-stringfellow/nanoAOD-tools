@@ -100,6 +100,8 @@ drop Jet_bReg*
 drop Jet_btagCMVA
 drop Jet_genJetIdx
 drop Jet_mass*
+drop Jet_*Up
+drop Jet_*Down
 
 keep SoftActivity*
 keep fixedGridRho*
@@ -119,6 +121,8 @@ drop FatJet_deepTagMD_ZHbbvsQCD
 drop FatJet_deepTagMD_bbvsLight
 drop FatJet_deepTagMD_ccvsLight
 drop FatJet_deepTag_H
+drop FatJet_*Up
+drop FatJet_*Down
 
 keep PV_npvs*
 
