@@ -25,6 +25,6 @@ submit_dataset_list(){
     done < $LIST
 }
 
-submit_dataset_list "datasets_2016.txt"
-submit_dataset_list "datasets_2017.txt"
-submit_dataset_list "datasets_2018.txt"
+submit_dataset_list "datasets_nanoaod_v7_2016.txt"
+submit_dataset_list "datasets_nanoaod_v7_2017.txt"
+submit_dataset_list "datasets_nanoaod_v7_2018.txt"
