@@ -8,6 +8,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import *
 from PhysicsTools.NanoAODTools.postprocessing.framework.crabhelper import inputFiles,runsAndLumis, addDatasetTag
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import *
+from PhysicsTools.NanoAODTools.postprocessing.modules.monojet.monojetpost import monojetPost, variation_safe_pt_cut
 from PhysicsTools.NanoAODTools.postprocessing.modules.monojet.triggerselector import triggerSelector
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetUncertainties import *
@@ -185,6 +186,7 @@ def main():
                                                     isMC=False,
                                                     dataYear=options['year'],
                                                     jesUncert="Total",
+                                                    redojec=True,
                                                     runPeriod=run_period,
                                                     jetType=jet_type,
                                                     metBranchName=met_branch_name(options['year'], jet_type)

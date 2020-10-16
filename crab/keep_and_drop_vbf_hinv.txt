@@ -1,0 +1,140 @@
+drop *
+
+# MET
+keep MET_*
+keep PuppiMET_*
+keep RawMET_*
+
+
+# Electron basic properties
+keep Electron_pt
+keep Electron_eta
+keep Electron_phi
+keep Electron_charge
+
+# Electron Isolation
+keep Electron_pfRelIso03_all
+keep Electron_pfRelIso03_chg
+keep Electron_sip3d
+
+# Electron ID
+keep Electron_cutBased
+keep GenMET*
+
+
+
+### Generator
+keep Generator_*
+
+keep nGenJet
+keep GenJet_*
+keep nGenVisTau
+keep GenVisTau_*
+
+keep nGenDressedLepton*
+keep GenDressedLepton*
+
+
+### Jets
+keep nJet
+
+# Jet basic properties
+keep Jet_pt
+keep Jet_eta
+keep Jet_phi
+
+# Jet tagging
+keep Jet_btag*
+
+# Jet ID
+keep Jet_jetId
+
+# Composition
+keep Jet*EF
+keep Jet_nConstituents
+keep Jet_nElectrons
+keep Jet_nMuons
+
+# Corrections
+keep Jet_rawFactor
+
+# Gen Matching
+keep Jet_genJetIdx
+
+### Muons
+
+keep nMuon
+
+# Muon IP
+keep Muon_dxy
+keep Muon_dxyErr
+keep Muon_dz
+keep Muon_dzErr
+keep Muon_ip3d
+
+# Muon kinematics
+keep Muon_eta
+keep Muon_pt
+keep Muon_ptErr
+keep Muon_charge
+keep Muon_tightCharge
+keep Muon_phi
+
+# Muon ID
+keep Muon_isPFcand
+keep Muon_mediumId
+keep Muon_softId
+keep Muon_tightId
+
+# Muon Isolation
+keep Muon_pfRelIso03_all
+keep Muon_pfRelIso03_chg
+keep Muon_pfRelIso04_all
+
+### Photons
+keep nPhoton
+
+# Photon isolation
+keep Photon_pfRelIso03_all
+keep Photon_pfRelIso03_chg
+
+# Photon kinematics
+keep Photon_phi
+keep Photon_pt
+keep Photon_eta
+
+# Photon ID
+keep Photon_cutBased
+
+
+
+
+keep fixedGridRho*
+
+keep nTau
+keep Tau_*
+
+keep TkMET*
+
+keep nOtherPV
+
+keep PV_*
+
+
+
+# Pileup
+keep Pileup_nTrueInt
+keep Pileup_nPU
+
+# Triggers
+keep HLT_PFMET*
+keep HLT_Ele*
+
+# Flags
+keep Flag_*
+
+
+
+# Test
+
+drop GenPart_*
