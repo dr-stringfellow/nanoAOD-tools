@@ -8,7 +8,6 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import *
 from PhysicsTools.NanoAODTools.postprocessing.framework.crabhelper import inputFiles,runsAndLumis, addDatasetTag
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import *
-from PhysicsTools.NanoAODTools.postprocessing.modules.monojet.monojetpost import monojetPost, variation_safe_pt_cut
 from PhysicsTools.NanoAODTools.postprocessing.modules.monojet.triggerselector import triggerSelector
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetUncertainties import *
