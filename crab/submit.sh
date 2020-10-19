@@ -25,4 +25,5 @@ submit_dataset_list(){
     done < $LIST
 }
 
-submit_dataset_list "dy_v7_files.txt"
+submit_dataset_list "noskim_v7_files_2017.txt"
+submit_dataset_list "noskim_v7_files_2018.txt"
