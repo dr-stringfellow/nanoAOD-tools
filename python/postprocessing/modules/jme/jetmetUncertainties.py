@@ -73,7 +73,7 @@ class jetmetUncertaintiesProducer(Module):
         else:
             # self.jesUncertaintyInputFileName = globalTag + "_UncertaintySources_" + jetType + ".txt"
             self.jesGroupedFilePath = os.environ['CMSSW_BASE'] + "/src/PhysicsTools/NanoAODTools/data/jme/regrouped/"
-            self.jesGroupedUncertaintyFileName = "Regrouped_" + globalTag + "_UncertaintySources_" + jetType + ".txt"
+            self.jesGroupedUncertaintyFileName = "RegroupedV2_" + globalTag + "_UncertaintySources_" + jetType + ".txt"
             self.jesGroupedUncertaintyFilePath = pjoin(self.jesGroupedFilePath, self.jesGroupedUncertaintyFileName)
             # Copy the uncertainty source file to the tmp directory
             shutil.copy(self.jesGroupedUncertaintyFilePath, pjoin(self.jesInputFilePath, self.jesGroupedUncertaintyFileName))
