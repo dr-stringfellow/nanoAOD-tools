@@ -118,11 +118,15 @@ def main():
     if options['ismc']:
         jme_modules = []
         for jet_type in ['AK4PFchs', 'AK8PFPuppi']:
+            if jet_type == 'AK4PFchs':
+                jesUncert='All'
+            elif jet_type == 'AK8PFPuppi':
+                jesUncert='Total'
             jme_modules.append(
                                createJMECorrector(
                                                   isMC=True,
                                                   dataYear=options['year'],
-                                                  jesUncert="All", # Get all JEC uncertainties
+                                                  jesUncert=jesUncert,
                                                   redojec=options['year']=='2018',
                                                   jetType=jet_type,
                                                   metBranchName=met_branch_name(options['year'], jet_type)
@@ -182,11 +186,15 @@ def main():
         if options['year']=='2018' or options['year']=='2017':
             run_period = extract_period(options['dataset'])
             for jet_type in ['AK4PFchs', 'AK8PFPuppi']:
+                if jet_type == 'AK4PFchs':
+                    jesUncert='All'
+                elif jet_type == 'AK8PFPuppi':
+                    jesUncert='Total'
                 jme_modules.append(
                                 createJMECorrector(
                                                     isMC=False,
                                                     dataYear=options['year'],
-                                                    jesUncert="Total",
+                                                    jesUncert=jesUncert,
                                                     redojec=True,
                                                     runPeriod=run_period,
                                                     jetType=jet_type,
