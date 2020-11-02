@@ -991,8 +991,9 @@ class jetmetUncertaintiesProducer(Module):
                     self.out.fillBranch(
                         "%s_T1_pt_unclustEnUp" % self.metBranchName,
                         math.sqrt(met_T1_px_unclEnUp**2 + met_T1_py_unclEnUp**2))
-                    self.out.fillBranch("%s_T1_phi_unclustEnUp" % self.metBranchName,
-                                        math.atan2(met_T1_py_unclEnUp, met_T1_px_unclEnUp))
+                    self.out.fillBranch(
+                        "%s_T1_phi_unclustEnUp" % self.metBranchName,
+                        math.atan2(met_T1_py_unclEnUp, met_T1_px_unclEnUp))
                     self.out.fillBranch(
                         "%s_T1_pt_unclustEnDown" % self.metBranchName,
                         math.sqrt(met_T1_px_unclEnDown**2 + met_T1_py_unclEnDown**2))
