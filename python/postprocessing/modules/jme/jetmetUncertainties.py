@@ -305,6 +305,11 @@ class jetmetUncertaintiesProducer(Module):
                         self.out.branch(
                             "%s_T1_phi_jes%s%s" %
                             (self.metBranchName, jesUncertainty, shift), "F")
+                        self.out.branch(
+                            "%s_T1_pt_unclustEn%s" % (self.metBranchName, shift), "F")
+                        self.out.branch(
+                            "%s_T1_phi_unclustEn%s" % (self.metBranchName, shift), "F")
+
                     if 'T1Smear' in self.saveMETUncs:
                         self.out.branch(
                             "%s_T1Smear_pt_jes%s%s" %
@@ -312,11 +317,10 @@ class jetmetUncertaintiesProducer(Module):
                         self.out.branch(
                             "%s_T1Smear_phi_jes%s%s" %
                             (self.metBranchName, jesUncertainty, shift), "F")
-
-                self.out.branch(
-                    "%s_pt_unclustEn%s" % (self.metBranchName, shift), "F")
-                self.out.branch(
-                    "%s_phi_unclustEn%s" % (self.metBranchName, shift), "F")
+                        self.out.branch(
+                            "%s_T1Smear_pt_unclustEn%s" % (self.metBranchName, shift), "F")
+                        self.out.branch(
+                            "%s_T1Smear_phi_unclustEn%s" % (self.metBranchName, shift), "F")
 
         self.isV5NanoAOD = hasattr(inputTree, "Jet_muonSubtrFactor")
         print("nanoAODv5 or higher: " + str(self.isV5NanoAOD))
@@ -857,16 +861,26 @@ class jetmetUncertaintiesProducer(Module):
                         jesUncertainty] += delta_y_rawJet - met_unclEE_y
 
         if not self.isData:
-            (met_px_unclEnUp, met_py_unclEnUp) = (met_T1_px, met_T1_py)
-            (met_px_unclEnDown, met_py_unclEnDown) = (met_T1_px, met_T1_py)
+            # Read the deltas for unclustered energy variations from NanoAOD
             met_deltaPx_unclEn = getattr(
                 event, self.metBranchName + "_MetUnclustEnUpDeltaX")
             met_deltaPy_unclEn = getattr(
                 event, self.metBranchName + "_MetUnclustEnUpDeltaY")
-            met_px_unclEnUp = met_px_unclEnUp + met_deltaPx_unclEn
-            met_py_unclEnUp = met_py_unclEnUp + met_deltaPy_unclEn
-            met_px_unclEnDown = met_px_unclEnDown - met_deltaPx_unclEn
-            met_py_unclEnDown = met_py_unclEnDown - met_deltaPy_unclEn
+            # Below, save separately for T1 and T1Smear MET
+            if 'T1' in self.saveMETUncs:
+                (met_T1_px_unclEnUp, met_T1_py_unclEnUp) = (met_T1_px, met_T1_py)
+                (met_T1_px_unclEnDown, met_T1_py_unclEnDown) = (met_T1_px, met_T1_py)
+                met_T1_px_unclEnUp = met_T1_px_unclEnUp + met_deltaPx_unclEn
+                met_T1_py_unclEnUp = met_T1_py_unclEnUp + met_deltaPy_unclEn
+                met_T1_px_unclEnDown = met_T1_px_unclEnDown - met_deltaPx_unclEn
+                met_T1_py_unclEnDown = met_T1_py_unclEnDown - met_deltaPy_unclEn
+            if 'T1Smear' in self.saveMETUncs:
+                (met_T1Smear_px_unclEnUp, met_T1Smear_py_unclEnUp) = (met_T1Smear_px, met_T1Smear_py)
+                (met_T1Smear_px_unclEnDown, met_T1Smear_py_unclEnDown) = (met_T1Smear_px, met_T1Smear_py)
+                met_T1Smear_px_unclEnUp = met_T1Smear_px_unclEnUp + met_deltaPx_unclEn
+                met_T1Smear_py_unclEnUp = met_T1Smear_py_unclEnUp + met_deltaPy_unclEn
+                met_T1Smear_px_unclEnDown = met_T1Smear_px_unclEnDown - met_deltaPx_unclEn
+                met_T1Smear_py_unclEnDown = met_T1Smear_py_unclEnDown - met_deltaPy_unclEn
 
         self.out.fillBranch("%s_pt_raw" % self.jetBranchName, jets_pt_raw)
         self.out.fillBranch("%s_pt_nom" % self.jetBranchName, jets_pt_nom)
@@ -974,6 +988,18 @@ class jetmetUncertaintiesProducer(Module):
                         (self.metBranchName, jesUncertainty),
                         math.atan2(met_T1_py_jesDown[jesUncertainty],
                                    met_T1_px_jesDown[jesUncertainty]))
+                    self.out.fillBranch(
+                        "%s_T1_pt_unclustEnUp" % self.metBranchName,
+                        math.sqrt(met_T1_px_unclEnUp**2 + met_T1_py_unclEnUp**2))
+                    self.out.fillBranch("%s_T1_phi_unclustEnUp" % self.metBranchName,
+                                        math.atan2(met_T1_py_unclEnUp, met_T1_px_unclEnUp))
+                    self.out.fillBranch(
+                        "%s_T1_pt_unclustEnDown" % self.metBranchName,
+                        math.sqrt(met_T1_px_unclEnDown**2 + met_T1_py_unclEnDown**2))
+                    self.out.fillBranch(
+                        "%s_T1_phi_unclustEnDown" % self.metBranchName,
+                        math.atan2(met_T1_py_unclEnDown, met_T1_px_unclEnDown))
+        
 
                 if 'T1Smear' in self.saveMETUncs:
                     self.out.fillBranch(
@@ -996,6 +1022,17 @@ class jetmetUncertaintiesProducer(Module):
                         (self.metBranchName, jesUncertainty),
                         math.atan2(met_T1Smear_py_jesDown[jesUncertainty],
                                    met_T1Smear_px_jesDown[jesUncertainty]))
+                    self.out.fillBranch(
+                        "%s_T1Smear_pt_unclustEnUp" % self.metBranchName,
+                        math.sqrt(met_T1Smear_px_unclEnUp**2 + met_T1Smear_py_unclEnUp**2))
+                    self.out.fillBranch("%s_T1Smear_phi_unclustEnUp" % self.metBranchName,
+                                        math.atan2(met_T1Smear_py_unclEnUp, met_T1Smear_px_unclEnUp))
+                    self.out.fillBranch(
+                        "%s_T1Smear_pt_unclustEnDown" % self.metBranchName,
+                        math.sqrt(met_T1Smear_px_unclEnDown**2 + met_T1Smear_py_unclEnDown**2))
+                    self.out.fillBranch(
+                        "%s_T1Smear_phi_unclustEnDown" % self.metBranchName,
+                        math.atan2(met_T1Smear_py_unclEnDown, met_T1Smear_px_unclEnDown))
 
                 self.out.fillBranch(
                     "%s_mass_jes%sUp" % (self.jetBranchName, jesUncertainty),
@@ -1003,18 +1040,6 @@ class jetmetUncertaintiesProducer(Module):
                 self.out.fillBranch(
                     "%s_mass_jes%sDown" % (self.jetBranchName, jesUncertainty),
                     jets_mass_jesDown[jesUncertainty])
-
-            self.out.fillBranch(
-                "%s_pt_unclustEnUp" % self.metBranchName,
-                math.sqrt(met_px_unclEnUp**2 + met_py_unclEnUp**2))
-            self.out.fillBranch("%s_phi_unclustEnUp" % self.metBranchName,
-                                math.atan2(met_py_unclEnUp, met_px_unclEnUp))
-            self.out.fillBranch(
-                "%s_pt_unclustEnDown" % self.metBranchName,
-                math.sqrt(met_px_unclEnDown**2 + met_py_unclEnDown**2))
-            self.out.fillBranch(
-                "%s_phi_unclustEnDown" % self.metBranchName,
-                math.atan2(met_py_unclEnDown, met_px_unclEnDown))
 
         return True
 
