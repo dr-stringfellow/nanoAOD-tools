@@ -97,7 +97,7 @@ def main():
         trigger_selector = []
     else:
         triggerfile = 'triggers_nano_v5.txt'
-        trigger_selector = [triggerSelector(triggerfile)]
+        trigger_selector = []
         common_modules = [monojetPost()]
 
         if options['year'] == '2016' and not options['ismc']:
