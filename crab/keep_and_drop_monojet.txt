@@ -205,6 +205,14 @@ keep HLT_MonoCentralPFJet80_PFMETNoMu120_PFMHTNoMu120_IDTight
 keep HLT_MonoCentralPFJet80_PFMETNoMu130_PFMHTNoMu130_IDTight
 keep HLT_MonoCentralPFJet80_PFMETNoMu140_PFMHTNoMu140_IDTight
 
+keep HLT_PFJet200
+keep HLT_PFJet260
+keep HLT_PFJet320
+keep HLT_PFJet400
+keep HLT_PFJet450
+keep HLT_PFJet500
+keep HLT_PFJet550
+
 keep HLT_PFMET200_NotCleaned
 keep HLT_PFMET200_HBHECleaned
 keep HLT_PFMET250_HBHECleaned
