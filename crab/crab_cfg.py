@@ -56,7 +56,7 @@ def short_name(dataset):
     _, name, conditions, _ = dataset.split("/")
 
     # Remove useless info
-    name = name.replace("_TuneCP5","")
+    # name = name.replace("_TuneCP5","")
     name = name.replace("_TuneCUETP8M1","")
     name = name.replace("_13TeV","")
     name = name.replace("-pythia8","")
