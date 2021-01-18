@@ -167,6 +167,14 @@ keep HLT_IsoMu30
 keep HLT_Mu50
 keep HLT_Mu55
 
+keep HLT_PFJet40
+keep HLT_PFJet60
+keep HLT_PFJet80
+keep HLT_PFJet140
+
+keep HLT_PFHT180
+keep HLT_PFHT250
+keep HLT_PFHT370
 keep HLT_PFHT590
 keep HLT_PFHT680
 keep HLT_PFHT780
