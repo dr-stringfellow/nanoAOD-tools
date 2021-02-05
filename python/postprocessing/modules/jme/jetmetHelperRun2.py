@@ -69,16 +69,22 @@ jmsValues = { '2016'   : [1.00, 0.9906, 1.0094], # nominal, down, up
               'UL2017' : [1.000, 1.000, 1.000], # placeholder
             }
 
-def createJMECorrector(isMC=True, dataYear=2016, runPeriod="B", jesUncert="Total", jetType="AK4PFchs", noGroom=False, metBranchName="MET", applySmearing=True, isFastSim=False, applyHEMfix=False, splitJER=False):
+def createJMECorrector(isMC=True, dataYear=2016, runPeriod="B", jesUncert="Total", jetType="AK4PFchs", noGroom=False, metBranchName="MET", applySmearing=True, isFastSim=False, applyHEMfix=False, splitJER=False, isUL=True):
     
     dataYear = str(dataYear)
 
     if isMC and not isFastSim:
-        jecTag_ = jecTagsMC[dataYear]
+        if isUL:
+            jecTag_ = jecTagsMC['UL{}'.format(dataYear)]
+        else:
+            jecTag_ = jecTagsMC[dataYear]
     elif isMC and isFastSim:
         jecTag_ = jecTagsFastSim[dataYear]
     else:
-        jecTag_ = jecTagsDATA[dataYear + runPeriod]
+        if isUL:
+            jecTag_ = jecTagsDATA['UL{}'.format(dataYear + runPeriod)]
+        else:
+            jecTag_ = jecTagsDATA[dataYear + runPeriod]
 
     jmeUncert_ = [x for x in jesUncert.split(",")]
 
@@ -88,7 +94,10 @@ def createJMECorrector(isMC=True, dataYear=2016, runPeriod="B", jesUncert="Total
 
     jmsValues_ = jmsValues[dataYear]
 
-    archiveTag_ = archiveTagsDATA[dataYear]
+    if isUL:
+        archiveTag_ = archiveTagsDATA['UL' + dataYear]
+    else:
+        archiveTag_ = archiveTagsDATA[dataYear]
   
     met_ = metBranchName
     
