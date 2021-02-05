@@ -100,22 +100,34 @@ def createJMECorrector(isMC=True,
                        isFastSim=False,
                        applyHEMfix=False,
                        splitJER=False,
-                       saveMETUncs=['T1', 'T1Smear']):
+                       saveMETUncs=['T1', 'T1Smear'],
+                       isUL=True):
 
     dataYear = str(dataYear)
 
     if isMC and not isFastSim:
-        jecTag_ = jecTagsMC[dataYear]
+        if isUL:
+            jecTag_ = jecTagsMC['UL{}'.format(dataYear)]
+        else:
+            jecTag_ = jecTagsMC[dataYear]
     elif isMC and isFastSim:
         jecTag_ = jecTagsFastSim[dataYear]
     else:
-        jecTag_ = jecTagsDATA[dataYear + runPeriod]
+        if isUL:
+            jecTag_ = jecTagsDATA['UL{}'.format(dataYear + runPeriod)]
+        else:
+            jecTag_ = jecTagsDATA[dataYear + runPeriod]
 
     jmeUncert_ = [x for x in jesUncert.split(",")]
     jerTag_ = jerTagsMC[dataYear]
     jmrValues_ = jmrValues[dataYear]
     jmsValues_ = jmsValues[dataYear]
-    archiveTag_ = archiveTagsDATA[dataYear]
+
+    if isUL:
+        archiveTag_ = archiveTagsDATA['UL' + dataYear]
+    else:
+        archiveTag_ = archiveTagsDATA[dataYear]
+  
     met_ = metBranchName
     print('JEC : ' + str(jecTag_) + '\t JER : ' + str(jerTag_))
     print('MET branch : ' + str(met_))
