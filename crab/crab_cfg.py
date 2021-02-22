@@ -92,7 +92,7 @@ def short_name(dataset):
         name = name + "_" + run
     return name
 
-tag = "ULv8_05Feb21"
+tag = "DYv8_22Feb21"
 dataset = get_dataset()
 name = short_name(dataset)
 config = base_configuration()
