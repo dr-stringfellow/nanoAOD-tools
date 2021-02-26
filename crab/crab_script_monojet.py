@@ -132,7 +132,8 @@ def main():
                                                   dataYear=options['year'],
                                                   jesUncert="Total",
                                                   jetType=jet_type,
-                                                  metBranchName=met_branch_name(options['year'], jet_type)
+                                                  metBranchName=met_branch_name(options['year'], jet_type),
+                                                  isUL=True
                                                   )()
                                 )
         if options['year'] == '2016':
@@ -196,7 +197,8 @@ def main():
                                                     jesUncert="Total",
                                                     runPeriod=run_period,
                                                     jetType=jet_type,
-                                                    metBranchName=met_branch_name(options['year'], jet_type)
+                                                    metBranchName=met_branch_name(options['year'], jet_type),
+                                                    isUL=True
                                                     )()
                                     )
 

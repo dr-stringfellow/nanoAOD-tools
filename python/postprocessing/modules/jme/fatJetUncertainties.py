@@ -10,7 +10,7 @@ from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetSmearer import jetS
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.JetReCalibrator import JetReCalibrator
 
 class fatJetUncertaintiesProducer(Module):
-    def __init__(self, era, globalTag, jesUncertainties = [ "Total" ], archive=None, jetType = "AK8PFPuppi", noGroom=False, jerTag="", jmrVals = [], jmsVals = [], isData=False, applySmearing=True, applyHEMfix=False, splitJER=False):
+    def __init__(self, era, globalTag, jesUncertainties = [ "Total" ], archive=None, jetType = "AK8PFPuppi", noGroom=False, jerTag="", jmrVals = [], jmsVals = [], isData=False, applySmearing=True, applyHEMfix=False, splitJER=False, isUL=False):
 
         self.era = era
         self.noGroom = noGroom
@@ -30,8 +30,13 @@ class fatJetUncertaintiesProducer(Module):
         self.jesUncertainties = jesUncertainties
         # smear jet pT to account for measured difference in JER between data and simulation.
         if jerTag != "":
-            self.jerInputFileName = jerTag + "_PtResolution_" + jetType + ".txt"
-            self.jerUncertaintyInputFileName = jerTag + "_SF_"  + jetType + ".txt"
+            if not isUL:
+                self.jerInputFileName = jerTag + "_PtResolution_" + jetType + ".txt"
+                self.jerUncertaintyInputFileName = jerTag + "_SF_"  + jetType + ".txt"
+            # For UL, we only have these files for AK4 PFchs jets! Use them for now...
+            else:
+                self.jerInputFileName = jerTag + "_PtResolution_AK4PFchs.txt"
+                self.jerUncertaintyInputFileName = jerTag + "_SF_AK4PFchs.txt"
         else:
             print "WARNING: jerTag is empty!!! This module will soon be deprecated! Please use jetmetHelperRun2 in the future."
             if era == "2016":

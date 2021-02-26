@@ -76,19 +76,21 @@ def createJMECorrector(isMC=True, dataYear=2016, runPeriod="B", jesUncert="Total
     if isMC and not isFastSim:
         if isUL:
             jecTag_ = jecTagsMC['UL{}'.format(dataYear)]
+            jerTag_ = jerTagsMC['UL{}'.format(dataYear)] 
         else:
             jecTag_ = jecTagsMC[dataYear]
+            jerTag_ = jerTagsMC[dataYear]
     elif isMC and isFastSim:
         jecTag_ = jecTagsFastSim[dataYear]
     else:
         if isUL:
             jecTag_ = jecTagsDATA['UL{}'.format(dataYear + runPeriod)]
+            jerTag_ = jerTagsMC['UL{}'.format(dataYear)] 
         else:
             jecTag_ = jecTagsDATA[dataYear + runPeriod]
+            jerTag_ = jerTagsMC[dataYear]
 
     jmeUncert_ = [x for x in jesUncert.split(",")]
-
-    jerTag_ = jerTagsMC[dataYear] 
 
     jmrValues_ = jmrValues[dataYear]
 
@@ -115,9 +117,9 @@ def createJMECorrector(isMC=True, dataYear=2016, runPeriod="B", jesUncert="Total
     # no MET variations calculated
     else:
       if isMC:
-          jmeCorrections = lambda : fatJetUncertaintiesProducer(era=dataYear,                      globalTag=jecTag_, jesUncertainties=jmeUncert_, jetType=jetType, jerTag=jerTag_, jmrVals=jmrValues_, jmsVals=jmsValues_, applySmearing=applySmearing, applyHEMfix=applyHEMfix, splitJER=splitJER)
+          jmeCorrections = lambda : fatJetUncertaintiesProducer(era=dataYear,                      globalTag=jecTag_, jesUncertainties=jmeUncert_, jetType=jetType, jerTag=jerTag_, jmrVals=jmrValues_, jmsVals=jmsValues_, applySmearing=applySmearing, applyHEMfix=applyHEMfix, splitJER=splitJER, isUL=isUL)
       else:
-          jmeCorrections = lambda : fatJetUncertaintiesProducer(era=dataYear, archive=archiveTag_, globalTag=jecTag_, jesUncertainties=jmeUncert_, jetType=jetType, jerTag=jerTag_, jmrVals=jmrValues_, jmsVals=jmsValues_, isData=True)
+          jmeCorrections = lambda : fatJetUncertaintiesProducer(era=dataYear, archive=archiveTag_, globalTag=jecTag_, jesUncertainties=jmeUncert_, jetType=jetType, jerTag=jerTag_, jmrVals=jmrValues_, jmsVals=jmsValues_, isData=True, isUL=isUL)
 
     return jmeCorrections
 
