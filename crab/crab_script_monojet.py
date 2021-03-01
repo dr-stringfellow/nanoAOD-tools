@@ -100,8 +100,8 @@ def main():
         trigger_selector = []
     else:
         triggerfile = 'triggers_nano_v5.txt'
-        trigger_selector = [triggerSelector(triggerfile)]
-        common_modules = [monojetPost()]
+        trigger_selector = []
+        common_modules = []
 
         if options['year'] == '2016' and not options['ismc']:
             jetsorter = lambda x: x.pt
