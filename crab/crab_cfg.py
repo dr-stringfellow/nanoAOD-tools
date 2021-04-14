@@ -99,7 +99,8 @@ config = base_configuration()
 
 
 ### Determine what to do based on type of dataset
-is_mc = dataset.endswith("SIM")
+# /USER is to account for the privately produced NanoAOD samples
+is_mc = dataset.endswith("SIM") or dataset.endswith("USER")
 crab_script = "crab_script_monojet.py"
 
 
