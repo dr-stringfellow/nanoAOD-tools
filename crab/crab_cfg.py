@@ -139,6 +139,8 @@ else:
     config.Data.totalUnits = -1
 
 config.Data.outputDatasetTag = name
+# Laurent's samples are NOT in the global DB instance, look at "phys03"
+config.Data.inputDBS = "phys03"
 
 config.section_("Site")
 
