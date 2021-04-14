@@ -105,9 +105,9 @@ crab_script = "crab_script_monojet.py"
 
 if ("Summer16" in dataset) or ("Run2016" in dataset):
     year=2016
-elif ("Run2017" in dataset) or ("Fall17" in dataset) or ("Summer20UL17" in dataset) or ("Summer19UL17" in dataset):
+elif ("Run2017" in dataset) or ("Fall17" in dataset) or ("UL17" in dataset):
     year=2017
-if ("Autumn18" in dataset) or ("Run2018" in dataset) or ("Summer20UL18" in dataset) or ("Summer19UL18" in dataset):
+if ("Autumn18" in dataset) or ("Run2018" in dataset) or ("UL18" in dataset):
     year=2018
 
 if not is_mc:
