@@ -158,17 +158,17 @@ def main():
             pu_modules = [ puAutoWeight_2017() ]
             pref_modules = [
                             PrefCorr(
-                                    jetroot="L1prefiring_jetpt_2017BtoF.root",
-                                    jetmapname="L1prefiring_jetpt_2017BtoF",
-                                    photonroot="L1prefiring_photonpt_2017BtoF.root",
-                                    photonmapname="L1prefiring_photonpt_2017BtoF",
+                                    jetroot="L1PrefiringMaps_UL.root",
+                                    jetmapname="L1prefiring_jetptvseta_UL2017BtoF",
+                                    photonroot="L1PrefiringMaps_UL.root",
+                                    photonmapname="L1prefiring_photonptvseta_UL2017BtoF",
                                     branchnames=["PrefireWeight","PrefireWeight_Up", "PrefireWeight_Down"]
                                     ),
                             PrefCorr(
-                                    jetroot="L1prefiring_jetempt_2017BtoF.root",
-                                    jetmapname="L1prefiring_jetempt_2017BtoF",
-                                    photonroot="L1prefiring_photonpt_2017BtoF.root",
-                                    photonmapname="L1prefiring_photonpt_2017BtoF",
+                                    jetroot="L1PrefiringMaps_UL.root",
+                                    jetmapname="L1prefiring_jetemptvseta_UL2017BtoF",
+                                    photonroot="L1PrefiringMaps_UL.root",
+                                    photonmapname="L1prefiring_photonptvseta_UL2017BtoF",
                                     branchnames=["PrefireWeight_jetem","PrefireWeight_jetem_Up", "PrefireWeight_jetem_Down"]
                                     )
                             ]
