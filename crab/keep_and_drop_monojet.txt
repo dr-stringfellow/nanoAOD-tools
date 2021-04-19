@@ -100,8 +100,6 @@ drop Jet_bReg*
 drop Jet_btagCMVA
 drop Jet_genJetIdx
 drop Jet_mass*
-drop Jet_*Up
-drop Jet_*Down
 
 keep SoftActivity*
 keep fixedGridRho*
