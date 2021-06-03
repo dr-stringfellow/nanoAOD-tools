@@ -130,10 +130,11 @@ def main():
                                createJMECorrector(
                                                   isMC=True,
                                                   dataYear=options['year'],
-                                                  jesUncert="Total",
+                                                  jesUncert="Merged" if jet_type == 'AK4PFchs' else "Total",
                                                   jetType=jet_type,
                                                   metBranchName=met_branch_name(options['year'], jet_type),
-                                                  isUL=True
+                                                  isUL=jet_type == 'AK4PFchs',
+                                                  saveMETUncs=['T1Smear']
                                                   )()
                                 )
         if options['year'] == '2016':
@@ -194,11 +195,11 @@ def main():
                                 createJMECorrector(
                                                     isMC=False,
                                                     dataYear=options['year'],
-                                                    jesUncert="Total",
+                                                    jesUncert="Merged" if jet_type == 'AK4PFchs' else "Total",
                                                     runPeriod=run_period,
                                                     jetType=jet_type,
                                                     metBranchName=met_branch_name(options['year'], jet_type),
-                                                    isUL=True
+                                                    isUL=jet_type == 'AK4PFchs',
                                                     )()
                                     )
 
