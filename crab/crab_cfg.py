@@ -119,8 +119,8 @@ if not is_mc:
         config.JobType.inputFiles.append("input/json/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt")
 
 config.JobType.inputFiles.append(crab_script)
-config.JobType.inputFiles.append('keep_and_drop_monojet.txt')
-config.JobType.inputFiles.append('triggers_nano_v5.txt')
+config.JobType.inputFiles.append('keep_and_drop_rebsmear.txt')
+config.JobType.inputFiles.append('triggers_rebsmear.txt')
 
 # Pass the dataset name as an argument so that
 # the script can write it into the output files.
