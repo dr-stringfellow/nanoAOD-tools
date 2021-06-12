@@ -10,6 +10,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.crabhelper import inputF
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.monojet.monojetpost import monojetPost, variation_safe_pt_cut
 from PhysicsTools.NanoAODTools.postprocessing.modules.monojet.triggerselector import triggerSelector
+from PhysicsTools.NanoAODTools.postprocessing.modules.rebsmear.rebsmearSkim import rebsmearSkim
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetUncertainties import *
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.PrefireCorr import PrefCorr
@@ -91,7 +92,7 @@ def main():
     else:
         files = inputFiles()
         maxEntries = 0
-    branchsel = "keep_and_drop_monojet.txt"
+    branchsel = "keep_and_drop_rebsmear.txt"
 
     if options['nofilter']:
         common_modules = []
@@ -99,9 +100,9 @@ def main():
         mc_selectors = []
         trigger_selector = []
     else:
-        triggerfile = 'triggers_nano_v5.txt'
+        triggerfile = 'triggers_rebsmear.txt'
         trigger_selector = [triggerSelector(triggerfile)]
-        common_modules = [monojetPost()]
+        common_modules = [rebsmearSkim()]
 
         if options['year'] == '2016' and not options['ismc']:
             jetsorter = lambda x: x.pt
