@@ -45,7 +45,7 @@ class rebsmearSkim(Module):
 
         # HT threshold: HT > 50 GeV
         ht = sum(jetpt)
-        if jetpt < ht_thresh:
+        if ht < ht_thresh:
             return False
         
         return True
