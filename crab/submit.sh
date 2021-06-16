@@ -3,7 +3,7 @@ SUBMITFILE="./wdir/${TAG}/submitted.txt"
 mkdir -p $(dirname $SUBMITFILE)
 
 # Save repo information for the job
-INFOFILE="./wdir${TAG}/version.txt"
+INFOFILE="./wdir/${TAG}/version.txt"
 
 echo "Commit hash: $(git rev-parse HEAD)" >> ${INFOFILE}
 echo "Branch name: $(git rev-parse --abbrev-ref HEAD)" >> ${INFOFILE}
