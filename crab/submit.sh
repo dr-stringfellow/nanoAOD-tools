@@ -1,6 +1,14 @@
 TAG=$(grep ^tag crab_cfg.py | sed "s|.*= *||g;s|\"||g")
 SUBMITFILE="./wdir/${TAG}/submitted.txt"
 mkdir -p $(dirname $SUBMITFILE)
+
+# Save repo information for the job
+INFOFILE="./wdir${TAG}/version.txt"
+
+echo "Commit hash: $(git rev-parse HEAD)" >> ${INFOFILE}
+echo "Branch name: $(git rev-parse --abbrev-ref HEAD)" >> ${INFOFILE}
+git diff >> ${INFOFILE}
+
 submit_dataset_list(){
     LIST=${1}
     sed -i  -e '$a\' ${LIST}
