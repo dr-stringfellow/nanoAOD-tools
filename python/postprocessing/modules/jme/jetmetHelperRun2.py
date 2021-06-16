@@ -119,7 +119,11 @@ def createJMECorrector(isMC=True,
             jecTag_ = jecTagsDATA[dataYear + runPeriod]
 
     jmeUncert_ = [x for x in jesUncert.split(",")]
-    jerTag_ = jerTagsMC[dataYear]
+    if isUL:
+        jerTag_ = jerTagsMC['UL{}'.format(dataYear)]
+    else:
+        jerTag_ = jerTagsMC[dataYear]
+    
     jmrValues_ = jmrValues[dataYear]
     jmsValues_ = jmsValues[dataYear]
 
