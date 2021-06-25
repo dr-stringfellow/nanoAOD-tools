@@ -133,8 +133,8 @@ def main():
                                                   jesUncert="Merged" if jet_type == 'AK4PFchs' else "Total",
                                                   jetType=jet_type,
                                                   metBranchName=met_branch_name(options['year'], jet_type),
-                                                  isUL=jet_type == 'AK4PFchs',
-                                                  saveMETUncs=['T1Smear']
+                                                  isUL=True,
+                                                  saveMETUncs=['T1Smear'],
                                                   )()
                                 )
         if options['year'] == '2016':

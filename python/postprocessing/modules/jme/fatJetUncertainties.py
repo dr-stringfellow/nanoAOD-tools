@@ -29,7 +29,8 @@ class fatJetUncertaintiesProducer(Module):
             isData=False,
             applySmearing=True,
             applyHEMfix=False,
-            splitJER=False
+            splitJER=False,
+            isUL=True
     ):
         self.era = era
         self.noGroom = noGroom
@@ -50,8 +51,13 @@ class fatJetUncertaintiesProducer(Module):
         # smear jet pT to account for measured difference in JER between data
         # and simulation.
         if jerTag != "":
-            self.jerInputFileName = jerTag + "_PtResolution_" + jetType + ".txt"
-            self.jerUncertaintyInputFileName = jerTag + "_SF_" + jetType + ".txt"
+            if not isUL:
+                self.jerInputFileName = jerTag + "_PtResolution_" + jetType + ".txt"
+                self.jerUncertaintyInputFileName = jerTag + "_SF_" + jetType + ".txt"
+            # For UL, we only have these files for AK4 PFchs jets! Use them for now...
+            else:
+                self.jerInputFileName = jerTag + "_PtResolution_AK4PFchs.txt"
+                self.jerUncertaintyInputFileName = jerTag + "_SF_AK4PFchs.txt"
         else:
             print(
                 "WARNING: jerTag is empty!!! This module will soon be "
