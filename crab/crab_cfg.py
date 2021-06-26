@@ -141,7 +141,8 @@ else:
 
 config.Data.outputDatasetTag = name
 # Laurent's samples are NOT in the global DB instance, look at "phys03"
-if not ( re.match('GJets.*HT.*', name) or re.match('WJetsToLNu.*HT.*', name) or re.match("EWK(W|Z).*", name) ):
+central_samples = '(GJets.*HT|WJetsToLNu.*HT|EWK(W|Z)|ZJetsToNuNu.*HT).*'
+if not re.match(central_samples, name):
     config.Data.inputDBS = "phys03"
 
 config.section_("Site")
