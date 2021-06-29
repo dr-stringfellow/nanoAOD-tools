@@ -1,4 +1,5 @@
 import ROOT
+import numpy as np
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
@@ -38,16 +39,24 @@ class rebsmearSkim(Module):
                 return True
         return False
 
-    def has_jets(self, jets, pt_thresh=15, ht_thresh=50):
+    def has_jets(self, jets, pt_thresh=15, ht_thresh=100, htmiss_thresh=75):
         jetpt = [j.pt for j in jets if j.pt > pt_thresh]
         if len(jetpt) < 2:
             return False
 
-        # HT threshold: HT > 50 GeV
+        # HT threshold: HT > 100 GeV
         ht = sum(jetpt)
         if ht < ht_thresh:
             return False
         
+        # HTmiss > 75 GeV
+        jetpx = [j.pt * np.cos(j.phi) for j in jets if j.pt > pt_thresh]
+        jetpy = [j.pt * np.sin(j.phi) for j in jets if j.pt > pt_thresh]
+
+        htmiss = np.hypot(sum(jetpx), sum(jetpy))
+        if htmiss < htmiss_thresh:
+            return False
+
         return True
 
     def analyze(self, event):
