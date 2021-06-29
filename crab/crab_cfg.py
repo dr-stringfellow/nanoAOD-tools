@@ -74,11 +74,11 @@ def short_name(dataset):
         name = name + "_" + m.groups()[0]
     if 'new_pmx' in conditions:
         name = name + '_new_pmx'
-    if ('RunIISummer16' in conditions) or ("RunIISummer20UL16" in conditions) or ("RunIISummer19UL16" in conditions):
+    if ('RunIISummer16' in conditions) or ("UL16" in conditions):
         name = name + "_2016"
-    elif ("RunIIFall17" in conditions) or ("RunIISummer20UL17" in conditions) or ("RunIISummer19UL17" in conditions):
+    elif ("RunIIFall17" in conditions) or ("UL17" in conditions):
         name = name + "_2017"
-    elif ('RunIIAutumn18' in conditions) or ("RunIISummer20UL18" in conditions) or ("RunIISummer19UL18" in conditions):
+    elif ('RunIIAutumn18' in conditions) or ("UL18" in conditions):
         name = name + "_2018"
 
     m = re.match(r"Run(\d+[A-Z]*)", conditions)
@@ -99,15 +99,16 @@ config = base_configuration()
 
 
 ### Determine what to do based on type of dataset
-is_mc = dataset.endswith("SIM")
+# "USER" is for private samples produced by Laurent
+is_mc = dataset.endswith("SIM") or dataset.endswith("USER")
 crab_script = "crab_script_monojet.py"
 
 
 if ("Summer16" in dataset) or ("Run2016" in dataset):
     year=2016
-elif ("Run2017" in dataset) or ("Fall17" in dataset) or ("Summer20UL17" in dataset) or ("Summer19UL17" in dataset):
+elif ("Run2017" in dataset) or ("Fall17" in dataset) or ("UL17" in dataset):
     year=2017
-if ("Autumn18" in dataset) or ("Run2018" in dataset) or ("Summer20UL18" in dataset) or ("Summer19UL18" in dataset):
+if ("Autumn18" in dataset) or ("Run2018" in dataset) or ("UL18" in dataset):
     year=2018
 
 if not is_mc:
@@ -139,6 +140,10 @@ else:
     config.Data.totalUnits = -1
 
 config.Data.outputDatasetTag = name
+
+# Laurent's samples are NOT in the global DB instance, look at "phys03" for these
+if dataset.endswith("USER"):
+    config.Data.inputDBS = "phys03"
 
 config.section_("Site")
 
