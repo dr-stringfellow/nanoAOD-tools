@@ -160,6 +160,11 @@ keep HLT_IsoMu24_eta2p1
 keep HLT_IsoMu27
 keep HLT_IsoMu30
 
+keep HLT_PFHT180
+keep HLT_PFHT250
+keep HLT_PFHT370
+keep HLT_PFHT430
+keep HLT_PFHT510
 keep HLT_PFHT590
 keep HLT_PFHT680
 keep HLT_PFHT780
