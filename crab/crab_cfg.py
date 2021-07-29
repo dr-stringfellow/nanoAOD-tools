@@ -154,7 +154,7 @@ if 'lxplus' in host:
     config.Data.outLFNDirBase = '/store/group/phys_exotica/monojet/aalbert/nanopost/{1}/'.format(getUsernameFromSiteDB(),tag)
 elif 'lpc' in host:
     config.Site.storageSite = "T3_US_FNALLPC"
-    config.Data.outLFNDirBase = '/store/user/aakpinar/nanopost/{0}/'.format(tag.replace("_central_05Jul21", ""))
+    config.Data.outLFNDirBase = '/store/user/aakpinar/nanopost/{0}/'.format(tag)
 else:
     raise RuntimeError("Cannot parse hostname: " + host)
 
