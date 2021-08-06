@@ -55,8 +55,8 @@ def met_branch_name(year, jet_type, ulegacy=True):
 
 jsons = {
         '2016': "Cert_271036-284044_13TeV_ReReco_07Aug2017_Collisions16_JSON.txt",
-        '2017': "Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt",
-        '2018': "Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt"
+        '2017': "Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt",
+        '2018': "Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt"
 }
 
 def read_options():
