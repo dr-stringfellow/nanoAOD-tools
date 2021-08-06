@@ -115,9 +115,9 @@ if not is_mc:
     if year==2016:
         config.JobType.inputFiles.append("input/json/Cert_271036-284044_13TeV_ReReco_07Aug2017_Collisions16_JSON.txt")
     elif year==2017:
-        config.JobType.inputFiles.append("input/json/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt")
+        config.JobType.inputFiles.append("input/json/Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt")
     elif year==2018:
-        config.JobType.inputFiles.append("input/json/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt")
+        config.JobType.inputFiles.append("input/json/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt")
 
 config.JobType.inputFiles.append(crab_script)
 config.JobType.inputFiles.append('keep_and_drop_monojet.txt')
@@ -154,7 +154,7 @@ if 'lxplus' in host:
     config.Data.outLFNDirBase = '/store/group/phys_exotica/monojet/aalbert/nanopost/{1}/'.format(getUsernameFromSiteDB(),tag)
 elif 'lpc' in host:
     config.Site.storageSite = "T3_US_FNALLPC"
-    config.Data.outLFNDirBase = '/store/user/aakpinar/nanopost/{0}/'.format(tag)
+    config.Data.outLFNDirBase = '/store/user/aakpinar/nanopost/{0}/'.format(tag.replace('_central_05Jul21', ''))
 else:
     raise RuntimeError("Cannot parse hostname: " + host)
 
