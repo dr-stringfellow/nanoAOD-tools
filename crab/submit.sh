@@ -5,6 +5,7 @@ mkdir -p $(dirname $SUBMITFILE)
 # Save repo information for the job
 INFOFILE="./wdir/${TAG}/version.txt"
 
+echo "New submission: $(date)" >> ${INFOFILE}
 echo "Commit hash: $(git rev-parse HEAD)" >> ${INFOFILE}
 echo "Branch name: $(git rev-parse --abbrev-ref HEAD)" >> ${INFOFILE}
 git diff >> ${INFOFILE}
